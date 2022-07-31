@@ -1,0 +1,48 @@
+<section class="bg-slate-100 py-2 px-3">
+  <h3 class="mb-5 text-neutral-800 font-bold text-lg text-center lg:text-xl">
+    Nuestras vacantes disponibles
+  </h3>
+  <div class="container m-auto md:w-2/3 lg:w-1/2 h-full">
+    <app-card-vacant></app-card-vacant>
+    <app-card-vacant></app-card-vacant>
+    <app-card-vacant></app-card-vacant>
+    <app-card-vacant></app-card-vacant>
+    <app-card-vacant></app-card-vacant>
+    <div class="my-10 flex flex-row flex-wrap justify-center items-center">
+      <div
+        class="bg-slate-200 hover:bg-slate-300 h-10 leading-10 rounded-full text-center text-neutral-800 cursor-pointer mx-1 flex justify-center items-center w-32"
+      >
+        <img src="/assets/icon_prev.svg" alt="Icono anterior" class="w-7" />
+        <span class="text-base">Anterior</span>
+      </div>
+
+      <span
+        class="bg-slate-800 h-10 w-10 leading-10 rounded-full text-center text-white cursor-pointer mx-1 hidden sm:block"
+        >1</span
+      >
+      <span
+        class="bg-slate-200 hover:bg-slate-300 h-10 w-10 leading-10 rounded-full text-center text-neutral-800 cursor-pointer mx-1 hidden sm:block"
+        >2</span
+      >
+      <span
+        class="bg-slate-200 hover:bg-slate-300 h-10 w-10 leading-10 rounded-full text-center text-neutral-800 cursor-pointer mx-1 hidden sm:block"
+        >3</span
+      >
+      <span
+        class="bg-slate-200 hover:bg-slate-300 h-10 w-10 leading-10 rounded-full text-center text-neutral-800 cursor-pointer mx-1 hidden sm:block"
+        >4</span
+      >
+
+      <div
+        class="bg-slate-200 hover:bg-slate-300 h-10 leading-10 rounded-full text-center text-neutral-800 cursor-pointer mx-1 flex justify-center items-center w-32"
+      >
+        <span class="text-base">Siguiente</span>
+        <img
+          src="/assets/icon_prev.svg"
+          alt="Icono anterior"
+          class="w-7 rotate-180"
+        />
+      </div>
+    </div>
+  </div>
+</section>
