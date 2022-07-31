@@ -1,0 +1,50 @@
+<section class="bg-slate-100 py-2">
+  <h3 class="mb-2 text-neutral-800 font-bold text-lg text-center lg:text-xl">
+    Buscar y filtrar vacantes
+  </h3>
+  <form class="w-full">
+    <div
+      class="flex flex-col items-center py-5 lg:flex-row lg:flex-wrap lg:justify-center"
+    >
+      <div class="w-4/5 lg:w-1/4 lg:mx-1">
+        <label class="font-semibold">Termino de búsqueda:</label>
+        <input
+          type="text"
+          placeholder="Buscar por termino ej: Angular"
+          class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md text-base px-2"
+        />
+      </div>
+      <div class="w-4/5 mt-2 lg:mt-0 lg:w-1/4 lg:mx-1">
+        <label class="font-semibold">Categoría:</label>
+        <select
+          class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md px-2"
+        >
+          <option value="">categoría</option>
+        </select>
+      </div>
+      <div class="w-4/5 mt-2 lg:mt-0 lg:w-1/4 lg:mx-1">
+        <label class="font-semibold">Salario mensual:</label>
+        <select
+          class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md px-2"
+        >
+          <option value="0">Seleccione un salario</option>
+          <option *ngFor="let salary of salaries" [value]="salary.id">
+            {{ salary.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="flex flex-row justify-center mb-3 lg:justify-end actions">
+      <button
+        class="w-3/12 lg:w-1/12 h-8 rounded-md px-2 bg-blue-400 text-white mx-1"
+      >
+        Limpiar
+      </button>
+      <button
+        class="w-3/12 lg:w-1/12 h-8 rounded-md px-2 bg-blue-700 text-white mx-1"
+      >
+        Buscar
+      </button>
+    </div>
+  </form>
+</section>
