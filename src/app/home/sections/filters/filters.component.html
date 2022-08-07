@@ -19,7 +19,10 @@
         <select
           class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md px-2"
         >
-          <option value="">categoría</option>
+          <option value="">Seleccione una categoría</option>
+          <option *ngFor="let category of categories" [value]="category.uid">
+            {{ category.name }}
+          </option>
         </select>
       </div>
       <div class="w-4/5 mt-2 lg:mt-0 lg:w-1/4 lg:mx-1">

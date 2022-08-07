@@ -1,11 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, map } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Category } from '../interfaces/category';
 import { Salary } from '../interfaces/salary';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SalaryServiceService {
-  constructor() {}
+export class FilterService {
+  private urlBase: string = environment.urlBase;
+
+  constructor(private http: HttpClient) {}
 
   getSalaries(): Salary[] {
     return [
@@ -46,5 +52,19 @@ export class SalaryServiceService {
         name: '+$5000',
       },
     ];
+  }
+
+  getCategories() {
+    const ep: string = `${this.urlBase}/categories`;
+    return this.http.get<Category>(ep).pipe(
+      map((categories) => {
+        return categories;
+      }),
+      catchError((error) => {
+        throw new Error(
+          'Hubo un error al obtener las categorías, favor de contactar a un administrador.'
+        );
+      })
+    );
   }
 }

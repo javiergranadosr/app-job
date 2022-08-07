@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Category, DetailCategory } from './interfaces/category';
 import { Salary } from './interfaces/salary';
-import { SalaryServiceService } from './services/salary-service.service';
+import { FilterService } from './services/filter.service';
 
 @Component({
   selector: 'app-filters',
@@ -8,11 +9,15 @@ import { SalaryServiceService } from './services/salary-service.service';
   styleUrls: ['./filters.component.css'],
 })
 export class FiltersComponent implements OnInit {
-  public salaries: Salary[] = [];
+  salaries: Salary[] = [];
+  categories: DetailCategory[] = [];
 
-  constructor(private salaryService: SalaryServiceService) {}
+  constructor(private filterService: FilterService) {}
 
   ngOnInit(): void {
-    this.salaries = this.salaryService.getSalaries();
+    this.salaries = this.filterService.getSalaries();
+    this.filterService.getCategories().subscribe(({categories, total}) => {
+      this.categories = categories;
+    });
   }
 }
