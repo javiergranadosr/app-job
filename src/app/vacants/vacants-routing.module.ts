@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DetailVacantComponent } from './detail-vacant/detail-vacant.component';
 import { NewVacantComponent } from './new-vacant/new-vacant.component';
 import { VacantsComponent } from './vacants/vacants.component';
 
@@ -15,6 +16,10 @@ const routes: Routes = [
         path: 'create',
         component: NewVacantComponent,
       },
+      {
+        path: 'detail',
+        component: DetailVacantComponent
+      }
     ],
   },
 ];
