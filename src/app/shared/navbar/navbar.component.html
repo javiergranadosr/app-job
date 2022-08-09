@@ -1,16 +1,59 @@
-<nav class="w-full h-10 bg-white sticky top-0 z-50">
+<nav class="w-full h-auto bg-white sticky top-0 z-50">
   <div
-    class="container mx-auto flex flex-nowrap flex-row justify-between items-center px-2"
+    class="container mx-auto flex flex-wrap flex-row justify-between items-center px-2"
   >
     <a href="" class="text-base md:text-2xl"
       ><span class="text-black">Plataforma de </span>
       <strong class="text-black">trabajos</strong></a
     >
-    <div class="menu">
+    <!-- CUANDO HAY SESION Y ES ROL RECLUTADOR -->
+
+    <div class="menu" >
       <a href="" class="text-sm lg:text-base mr-2 text-neutral-800"
+        >Mis vacantes</a
+      >
+      <a href="" class="text-sm lg:text-base text-neutral-800">Crear vacante</a>
+    </div>
+    <div class="menu movil-menu">
+      <!-- CUANDO NO HAY SESION -->
+      <!--  <a href="" class="text-sm lg:text-base mr-2 text-neutral-800"
         >Iniciar sesión</a
       >
-      <a href="" class="text-sm lg:text-base text-neutral-800">Crear cuenta</a>
+      <a href="" class="text-sm lg:text-base text-neutral-800">Crear cuenta</a>  -->
+
+      <!-- CUANDO HAY SESION Y ES ROL DESARROLLADOR Y RECLUTADOR  -->
+      <div class="dropdown inline-block relative">
+        <button
+          class="bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+        >
+          <span class="mr-1">Javier Granados Rojas</span>
+          <svg
+            class="fill-current h-4 w-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+            />
+          </svg>
+        </button>
+        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+          <li class="">
+            <a
+              class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+              href="#"
+              >Mi perfil</a
+            >
+          </li>
+          <li class="">
+            <a
+              class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+              href="#"
+              >Cerrar sesión</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

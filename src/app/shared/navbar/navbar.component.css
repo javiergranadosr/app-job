@@ -1,3 +1,15 @@
 .menu a:hover {
   border-bottom: 2px solid  #262626;
 }
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+
+@media (max-width: 640px) {
+  .movil-menu {
+    display: block;
+    margin: auto;
+  }
+}
