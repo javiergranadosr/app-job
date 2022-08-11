@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Roles } from '../../shared/interfaces/role';
-import { RoleService } from '../../shared/services/role.service';
+import { Roles } from '../interfaces/role';
+import { RoleService } from '../services/role.service';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +18,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .getRoles()
       .subscribe(({ total, roles }) => {
         this.roles = roles;
-        console.log(this.roles);
       });
   }
 
   ngOnDestroy(): void {
+    this.roles = [];
     if (this.roleSubscription) {
       this.roleSubscription.unsubscribe();
     }
