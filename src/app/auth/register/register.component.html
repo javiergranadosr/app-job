@@ -5,16 +5,29 @@
   </h1>
   <form
     class="bg-white mt-10 rounded-md mr-5 ml-5 p-2 md:w-1/2 md:block md:m-auto md:mt-10 lg:w-3/12"
+    [formGroup]="registerForm"
+    (ngSubmit)="register()"
   >
+    <ng-container *ngIf="errorMesagges.length > 0">
+      <app-alert  *ngFor="let error of errorMesagges" [message]="error"></app-alert>
+    </ng-container>
+
     <div class="block m-auto w-4/5 mt-2">
       <label class="font-semibold"
         >Nombre completo<span class="text-red-800">*</span>:</label
       >
       <input
-        type="email"
+        type="text"
         placeholder="Nombre completo"
         class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('name')
+        }"
+        formControlName="name"
       />
+      <small class="text-red-600 text-sm" *ngIf="validateField('name')"
+        >El nombre es requerido.</small
+      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
@@ -25,45 +38,88 @@
         type="email"
         placeholder="example@example.com"
         class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600':
+            validateFormatEmail() || emailRequired()
+        }"
+        formControlName="email"
       />
+      <small class="text-red-600 text-sm" *ngIf="emailRequired()"
+        >El correo electrónico es requerido.</small
+      >
+
+      <small class="text-red-600 text-sm" *ngIf="validateFormatEmail()"
+        >El formato del correo electrónico es invalido.</small
+      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
       <label class="font-semibold"
         >Tipo de cuenta<span class="text-red-800">*</span>:</label
       >
-      <select class="w-full h-8 rounded-md text-base px-2">
+      <select
+        class="w-full h-8 rounded-md text-base px-2"
+        formControlName="role"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('role')
+        }"
+      >
         <option value="">Tipo de cuenta</option>
         <option [value]="role.uid" *ngFor="let role of roles">
-          {{ role.name | titlecase }}
+          {{ role.description | titlecase }}
         </option>
       </select>
+      <small class="text-red-600 text-sm" *ngIf="validateField('role')"
+        >El rol de usuario es requerido.</small
+      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
-      <label class="font-semibold"> Contraseña:</label>
+      <label class="font-semibold">
+        Contraseña<span class="text-red-800">*</span>:</label
+      >
       <input
         type="password"
         placeholder="******"
         class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('password')
+        }"
+        formControlName="password"
       />
+      <small class="text-red-600 text-sm" *ngIf="validateField('password')">
+        La contraseña es requerida y debe tener un mínimo de 6
+        caracteres.</small
+      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
-      <label class="font-semibold"> Confirmar contraseña:</label>
+      <label class="font-semibold"
+        >Confirmar contraseña<span class="text-red-800">*</span>:</label
+      >
       <input
         type="password"
         placeholder="******"
         class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': vefiryPassword()
+        }"
+        formControlName="confirmPassword"
       />
+      <small class="text-red-600 text-sm" *ngIf="vefiryPassword()">
+        Las contraseñas no coinciden.</small
+      >
     </div>
 
     <div class="m-auto w-4/5 mt-2">
-      <a routerLink="/auth" class="font-normal text-sm text-center">Iniciar sesión</a>
+      <a routerLink="/auth" class="font-normal text-sm text-center"
+        >Iniciar sesión</a
+      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2 mb-2">
       <button
+        type="submit"
         class="w-full h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
       >
         Crear cuenta
