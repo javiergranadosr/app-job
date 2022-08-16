@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Login, ResponseLogin } from '../interfaces/login';
 import { Register, ResponseRegister } from '../interfaces/register';
 import { Role } from '../interfaces/role';
 
@@ -46,20 +47,38 @@ export class AuthService {
   register(data: Register) {
     const ep: string = `${this.urlBase}/users/create`;
     return this.http.post<ResponseRegister>(ep, data).pipe(
-      map(response => {
-        return response
+      map((response) => {
+        return response;
       }),
       catchError((error) => {
         return of(error);
       })
-    )
+    );
   }
 
+  login(data: Login) {
+    const ep: string = `${this.urlBase}/auth/login`;
+    return this.http.post<ResponseLogin>(ep, data).pipe(
+      tap((response) => {
+        if (response.token) {
+          sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem('data', JSON.stringify(response.data));
+        }
+      }),
+      catchError((error) => {
+        return of(error);
+      })
+    );
+  }
 
+  get dataUser(): ResponseLogin | null {
+    return sessionStorage.getItem('data')
+      ? JSON.parse(sessionStorage.getItem('data')!)
+      : null;
+  }
 
-
-
-
-
+  logout() {
+    sessionStorage.clear();
+  }
 
 }

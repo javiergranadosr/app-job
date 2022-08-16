@@ -5,13 +5,6 @@ export interface Register {
   password: string;
 }
 
-export interface ResponseError {
-  value: string;
-  msg: string;
-  param: string;
-  location: string;
-}
-
 export interface ResponseRegister {
   message: string;
   user?: {

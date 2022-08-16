@@ -3,27 +3,46 @@
     <span class="text-black">Plataforma de </span>
     <strong class="text-black">trabajos</strong>
   </h1>
-  <form class="bg-white mt-10 rounded-md mr-5 ml-5 p-2 md:w-1/2 md:block md:m-auto md:mt-10 lg:w-3/12">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    class="bg-white mt-10 rounded-md mr-5 ml-5 p-2 md:w-1/2 md:block md:m-auto md:mt-10 lg:w-3/12"
+  >
+
+  <ng-container *ngIf="errorMesagges.length > 0">
+    <app-alert  *ngFor="let error of errorMesagges" [message]="error"></app-alert>
+  </ng-container>
+
     <div class="block m-auto w-4/5 mt-2">
-      <label class="font-semibold"
-        >Correo electrónico:</label
-      >
+      <label class="font-semibold">Correo electrónico:</label>
       <input
         type="email"
         placeholder="example@example.com"
         class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('email')
+        }"
+        formControlName="email"
       />
+      <small class="text-red-600 text-sm" *ngIf="validateField('email')"
+        >El correo electrónico es requerido.</small
+      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
-      <label class="font-semibold">
-        Contraseña:</label
-      >
+      <label class="font-semibold"> Contraseña:</label>
       <input
         type="password"
         placeholder="******"
         class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('password')
+        }"
+        formControlName="password"
       />
+      <small class="text-red-600 text-sm" *ngIf="validateField('password')">
+        La contraseña es requerida.</small
+      >
     </div>
 
     <div class="m-auto w-4/5 mt-2 flex justify-between items-center">
@@ -31,11 +50,14 @@
         <input type="checkbox" />
         <label class="font-normal text-sm"> Recordarme</label>
       </div>
-      <a routerLink="/auth/register" class="font-normal text-sm text-center">Crear cuenta</a>
+      <a routerLink="/auth/register" class="font-normal text-sm text-center"
+        >Crear cuenta</a
+      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2 mb-2">
       <button
+        type="submit"
         class="w-full h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
       >
         Iniciar sesión

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Register, ResponseError } from '../interfaces/register';
+import { Register} from '../interfaces/register';
 import { Roles } from '../interfaces/role';
 import { AuthService } from '../services/auth.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Router } from '@angular/router';
+import { ResponseError } from '../../shared/interfaces/error';
 
 @Component({
   selector: 'app-register',
