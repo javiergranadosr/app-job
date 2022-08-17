@@ -7,10 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    title: 'Iniciar sesión'
   },
   {
     path: 'register',
     component: RegisterComponent,
+    title: 'Crear cuenta'
   },
 ];
 

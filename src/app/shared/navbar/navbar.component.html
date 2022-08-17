@@ -6,56 +6,70 @@
       ><span class="text-black">Plataforma de </span>
       <strong class="text-black">trabajos</strong></a
     >
-    <!-- CUANDO HAY SESION Y ES ROL RECLUTADOR <div class="menu" >
-      <a routerLink = "/vacants" class="text-sm lg:text-base mr-2 text-neutral-800"
-        >Mis vacantes</a
-      >
-      <a routerLink = "/vacants/new-vacant" class="text-sm lg:text-base text-neutral-800">Crear vacante</a>
-    </div> -->
+
+    <ng-container
+      *ngIf="hasSession && dataUser && dataUser.roleId.name === 'RECRUITER'"
+    >
+      <div class="menu">
+        <a
+          routerLink="/vacants"
+          class="text-sm lg:text-base mr-2 text-neutral-800"
+          >Mis vacantes</a
+        >
+        <a
+          routerLink="/vacants/new-vacant"
+          class="text-sm lg:text-base text-neutral-800"
+          >Crear vacante</a
+        >
+      </div>
+    </ng-container>
 
     <div class="menu movil-menu">
-      <!-- CUANDO NO HAY SESION -->
-      <a routerLink="/auth" class="text-sm lg:text-base mr-2 text-neutral-800"
-        >Iniciar sesión</a
-      >
-      <a
-        routerLink="/auth/register"
-        class="text-sm lg:text-base text-neutral-800"
-        >Crear cuenta</a
-      >
-
-      <!-- CUANDO HAY SESION Y ES ROL DESARROLLADOR Y RECLUTADOR <div class="dropdown inline-block relative">
-        <button
-          class="bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+      <ng-container *ngIf="!hasSession">
+        <a routerLink="/auth" class="text-sm lg:text-base mr-2 text-neutral-800"
+          >Iniciar sesión</a
         >
-          <span class="mr-1">Javier Granados Rojas</span>
-          <svg
-            class="fill-current h-4 w-4"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
+        <a
+          routerLink="/auth/register"
+          class="text-sm lg:text-base text-neutral-800"
+          >Crear cuenta</a
+        >
+      </ng-container>
+
+      <ng-container *ngIf="hasSession">
+        <div class="dropdown inline-block relative">
+          <button
+            class="bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
           >
-            <path
-              d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-            />
-          </svg>
-        </button>
-        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-          <li class="">
-            <a
-              class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-              href="#"
-              >Mi perfil</a
+            <span class="mr-1">{{dataUser.name}}</span>
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
             >
-          </li>
-          <li class="">
-            <a
-              class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-              href="#"
-              >Cerrar sesión</a
-            >
-          </li>
-        </ul>
-      </div> -->
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
+            </svg>
+          </button>
+          <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+            <li class="">
+              <a
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                href="#"
+                >Mi perfil</a
+              >
+            </li>
+            <li class="">
+              <a
+                class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer"
+                (click)="logout()"
+                >Cerrar sesión</a
+              >
+            </li>
+          </ul>
+        </div>
+      </ng-container>
     </div>
   </div>
 </nav>

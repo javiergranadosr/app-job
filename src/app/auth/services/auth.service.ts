@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { catchError, map, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Login, ResponseLogin } from '../interfaces/login';
+import { Login, ResponseLogin, User } from '../interfaces/login';
 import { Register, ResponseRegister } from '../interfaces/register';
 import { Role } from '../interfaces/role';
 
@@ -71,7 +71,7 @@ export class AuthService {
     );
   }
 
-  get dataUser(): ResponseLogin | null {
+  get dataUser(): User  | null {
     return sessionStorage.getItem('data')
       ? JSON.parse(sessionStorage.getItem('data')!)
       : null;
