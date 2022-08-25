@@ -6,6 +6,10 @@
     <ng-container
       *ngIf="vacantsRecruiter && vacantsRecruiter.length > 0; else empty"
     >
+      <span
+        >Total de vacantes publicadas:
+        <strong>{{ totalPublicVacants }}</strong></span
+      >
       <app-card-vacant
         *ngFor="let vacant of vacantsRecruiter"
         [dataVacant]="vacant"

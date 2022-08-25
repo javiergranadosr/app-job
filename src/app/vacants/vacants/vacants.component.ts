@@ -13,9 +13,10 @@ import { VacantService } from '../services/vacant.service';
 export class VacantsComponent implements OnInit, OnDestroy {
   uid: string = '';
   vacantsRecruiter: DataVacant[] = [];
+  totalPublicVacants: number = 0;
   vacantSuscription!: Subscription;
   page: number = 0;
-  limit: number = 5;
+  limit: number = 10;
   // Pagination
   totalPages: number = 0;
   listPages: number[] = [];
@@ -53,6 +54,7 @@ export class VacantsComponent implements OnInit, OnDestroy {
     this.vacantSuscription = this.vacantServices
       .getVacantsRecruiter(uid, page, limit)
       .subscribe(({ total, vacants }) => {
+        this.totalPublicVacants = total;
         this.vacantsRecruiter = vacants;
         if (pagination) {
           this.totalPages = Math.ceil(total / this.limit);
