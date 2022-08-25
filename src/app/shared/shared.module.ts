@@ -6,15 +6,8 @@ import { RouterModule } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
-  declarations: [
-    NavbarComponent,
-    FooterComponent,
-    AlertComponent,
-  ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  exports: [NavbarComponent, FooterComponent, AlertComponent]
+  declarations: [NavbarComponent, FooterComponent, AlertComponent],
+  imports: [CommonModule, RouterModule],
+  exports: [NavbarComponent, FooterComponent, AlertComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -2,6 +2,7 @@
   <div
     class="container mx-auto flex flex-wrap flex-row justify-between items-center px-2"
   >
+  <div>
     <a routerLink="/" class="text-base md:text-2xl"
       ><span class="text-black">Plataforma de </span>
       <strong class="text-black">trabajos</strong></a
@@ -23,8 +24,9 @@
         >
       </div>
     </ng-container>
-
+  </div>
     <div class="menu movil-menu">
+
       <ng-container *ngIf="!hasSession">
         <a routerLink="/auth" class="text-sm lg:text-base mr-2 text-neutral-800"
           >Iniciar sesión</a

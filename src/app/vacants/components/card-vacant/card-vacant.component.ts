@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DataVacant } from '../../interfaces/vacant';
 
 @Component({
   selector: 'app-card-vacant',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-vacant.component.css']
 })
 export class CardVacantComponent implements OnInit {
-
+  @Input() dataVacant!: DataVacant;
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

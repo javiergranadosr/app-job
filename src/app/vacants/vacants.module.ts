@@ -6,6 +6,7 @@ import { NewVacantComponent } from './new-vacant/new-vacant.component';
 import { VacantsComponent } from './vacants/vacants.component';
 import { CardVacantComponent } from './components/card-vacant/card-vacant.component';
 import { DetailVacantComponent } from './detail-vacant/detail-vacant.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,7 +19,8 @@ import { DetailVacantComponent } from './detail-vacant/detail-vacant.component';
   ],
   imports: [
     CommonModule,
-    VacantsRoutingModule
+    VacantsRoutingModule,
+    SharedModule
   ]
 })
 export class VacantsModule { }

@@ -2,10 +2,10 @@
   class="w-full bg-white md:flex md:flex-row md:flex-wrap md:justify-between md:items-center border-b-2 shadow-2xl shadow-white rounded"
 >
   <div class="p-5">
-    <h1 class="text-neutral-800 font-bold text-2xl">Angular developer</h1>
-    <h2 class="text-neutral-800 font-semibold text-base">Google</h2>
+    <h1 class="text-neutral-800 font-bold text-2xl"> {{ dataVacant.title | titlecase }} </h1>
+    <h2 class="text-neutral-800 font-semibold text-base">{{ dataVacant.company | titlecase }}</h2>
     <p class="text-neutral-700 font-normal text-sm">
-      Ultimo día: <span>30/06/2022</span>
+      Ultimo día: <span>{{ dataVacant.lastDate }}</span>
     </p>
   </div>
   <div class="flex flex-row justify-end flex-wrap">

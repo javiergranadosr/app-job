@@ -71,14 +71,19 @@ export class AuthService {
     );
   }
 
-  get dataUser(): User  | null {
+  get dataUser(): User | null {
     return sessionStorage.getItem('data')
       ? JSON.parse(sessionStorage.getItem('data')!)
       : null;
   }
 
+  get token(): string {
+    return sessionStorage.getItem('token')
+      ? sessionStorage.getItem('token')!
+      : '';
+  }
+
   logout() {
     sessionStorage.clear();
   }
-
 }
