@@ -1,82 +1,155 @@
-<section class="container m-auto mt-10 mb-10 bg-white md:w-2/3 lg:w-1/2 p-5 rounded-md">
+<section
+  class="container m-auto mt-10 mb-10 bg-white md:w-2/3 lg:w-1/2 p-5 rounded-md"
+>
   <h3 class="mb-2 text-neutral-800 font-bold text-lg text-center lg:text-xl">
     Publicar vacante
   </h3>
-  <div class="block m-auto w-4/5">
-    <label class="font-semibold"
-      >Título de la vacante<span class="text-red-800">*</span>:</label
-    >
-    <input
-      type="text"
-      placeholder="Título de la vacante"
-      class="w-full h-8 rounded-md text-base px-2"
-    />
-  </div>
 
-  <div class="block m-auto w-4/5 mt-2">
-    <label class="font-semibold">Salario mensual<span class="text-red-800">*</span>:</label>
-    <select class="w-full h-8 rounded-md text-base px-2">
-      <option value="0">Seleccione un salario</option>
-      <option *ngFor="let salary of salaries" [value]="salary.id">
-        {{ salary.name }}
-      </option>
-    </select>
-  </div>
+  <form [formGroup]="vacantForm" (ngSubmit)="createVacant()">
+    <ng-container *ngIf="errorMesagges.length > 0">
+      <app-alert
+        *ngFor="let error of errorMesagges"
+        [message]="error"
+      ></app-alert>
+    </ng-container>
 
-  <div class="block m-auto w-4/5 mt-2">
-    <label class="font-semibold">Categoría<span class="text-red-800">*</span>:</label>
-    <select class="w-full h-8 rounded-md text-base px-2">
-      <option value="">Seleccione una categoría</option>
-      <option *ngFor="let category of categories" [value]="category.uid">
-        {{ category.name }}
-      </option>
-    </select>
-  </div>
+    <div class="block m-auto w-4/5">
+      <label class="font-semibold"
+        >Título de la vacante<span class="text-red-800">*</span>:</label
+      >
+      <input
+        type="text"
+        placeholder="Título de la vacante"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('title')
+        }"
+        formControlName="title"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('title')"
+        >El título de la vacante es requerido.</small
+      >
+    </div>
 
-  <div class="block m-auto w-4/5 mt-2">
-    <label class="font-semibold"
-      >Empresa<span class="text-red-800">*</span>:</label
-    >
-    <input
-      type="text"
-      placeholder="Empresa: ej. Netflix, Uber"
-      class="w-full h-8 rounded-md text-base px-2"
-    />
-  </div>
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold"
+        >Salario mensual<span class="text-red-800">*</span>:</label
+      >
+      <select
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('salary')
+        }"
+        formControlName="salary"
+      >
+        <option value="">Seleccione un salario</option>
+        <option *ngFor="let salary of salaries" [value]="salary.id">
+          {{ salary.name }}
+        </option>
+      </select>
+      <small class="text-red-600 text-sm" *ngIf="validateField('salary')"
+        >El salario de la vacante es requerido.</small
+      >
+    </div>
 
-  <div class="block m-auto w-4/5 mt-2">
-    <label class="font-semibold"
-      >Ultimo día para postularse<span class="text-red-800">*</span>:</label
-    >
-    <input
-      type="date"
-      placeholder="Empresa: ej. Netflix, Uber"
-      class="w-full h-8 rounded-md text-base px-2"
-    />
-  </div>
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold"
+        >Categoría<span class="text-red-800">*</span>:</label
+      >
+      <select
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('category')
+        }"
+        formControlName="category"
+      >
+        <option value="">Seleccione una categoría</option>
+        <option *ngFor="let category of categories" [value]="category.uid">
+          {{ category.name }}
+        </option>
+      </select>
+      <small class="text-red-600 text-sm" *ngIf="validateField('category')"
+        >La categoría de la vacante es requerida.</small
+      >
+    </div>
 
-  <div class="block m-auto w-4/5 mt-2">
-    <label class="font-semibold">
-      Descripción del empleo<span class="text-red-800">*</span>:</label
-    >
-    <textarea class="w-full h-80 rounded-md text-base px-2"></textarea>
-  </div>
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold"
+        >Empresa<span class="text-red-800">*</span>:</label
+      >
+      <input
+        type="text"
+        placeholder="Empresa: ej. Netflix, Uber"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('company')
+        }"
+        formControlName="company"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('company')"
+        >El nombre de la empresa es requerido.</small
+      >
+    </div>
 
-  <div class="block m-auto w-4/5 mt-2">
-    <label class="font-semibold">
-      Imagen<span class="text-red-800">*</span>:</label
-    >
-    <input
-      class="w-full rounded-md text-base px-2 py-1.5"
-      type="file"
-    />
-  </div>
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold"
+        >Ultimo día para postularse<span class="text-red-800">*</span>:</label
+      >
+      <input
+        type="date"
+        placeholder="Empresa: ej. Netflix, Uber"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('lastDate')
+        }"
+        formControlName="lastDate"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('lastDate')"
+        >La fecha del ultimo día para postularse es requerida.</small
+      >
+    </div>
 
-  <div class="block m-auto w-4/5 mt-5">
-    <button
-    class="w-full h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
-  >
-    Crear vacante
-  </button>
-  </div>
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">
+        Descripción del empleo<span class="text-red-800">*</span>:</label
+      >
+      <textarea
+        class="w-full h-80 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('description')
+        }"
+        formControlName="description"
+      ></textarea>
+      <small class="text-red-600 text-sm" *ngIf="validateField('description')"
+        >La descripción del empleo es requerida.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">
+        Imagen<span class="text-red-800">*</span>:</label
+      >
+      <input
+        class="w-full rounded-md text-base px-2 py-1.5"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('image')
+        }"
+        type="file"
+        formControlName="image"
+        (change)="onFileChange($event)"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('image')"
+        >La imagen de la vacante es requerida.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-5">
+      <button
+        type="submit"
+        class="w-full h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
+      >
+        Crear vacante
+      </button>
+    </div>
+  </form>
 </section>

@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { ListVacant } from '../interfaces/vacant';
+import { DataVacant, ListVacant, ResponseVacant } from '../interfaces/vacant';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +35,20 @@ export class VacantService {
           throw new Error(
             'Hubo un error al obtener las vacantes del reclutador, favor de contactar a un administrador.'
           );
+        })
+      );
+  }
+
+  createVacant(data: DataVacant) {
+    const ep: string = `${this.urlBase}/vacants/create`;
+    return this.http
+      .post<ResponseVacant>(ep, data, { headers: this.headers })
+      .pipe(
+        map((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return of(error);
         })
       );
   }
