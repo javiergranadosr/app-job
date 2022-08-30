@@ -3,7 +3,12 @@ import { Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { DataVacant, ListVacant, ResponseVacant } from '../interfaces/vacant';
+import {
+  DataVacant,
+  ListVacant,
+  ResponseVacant,
+  ResponseVacantDelete,
+} from '../interfaces/vacant';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +48,20 @@ export class VacantService {
     const ep: string = `${this.urlBase}/vacants/create`;
     return this.http
       .post<ResponseVacant>(ep, data, { headers: this.headers })
+      .pipe(
+        map((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return of(error);
+        })
+      );
+  }
+
+  deleteVacant(id: string) {
+    const ep: string = `${this.urlBase}/vacants/delete/${id}`;
+    return this.http
+      .delete<ResponseVacantDelete>(ep, { headers: this.headers })
       .pipe(
         map((response) => {
           return response;

@@ -7,12 +7,13 @@
       *ngIf="vacantsRecruiter && vacantsRecruiter.length > 0; else empty"
     >
       <span
-        >Total de vacantes publicadas:
+        >Vacantes publicadas:
         <strong>{{ totalPublicVacants }}</strong></span
       >
       <app-card-vacant
         *ngFor="let vacant of vacantsRecruiter"
         [dataVacant]="vacant"
+        (deleted)="receiveDelete($event)"
       ></app-card-vacant>
       <div class="my-10 flex flex-row flex-wrap justify-center items-center">
         <div

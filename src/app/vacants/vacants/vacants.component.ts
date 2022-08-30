@@ -99,6 +99,18 @@ export class VacantsComponent implements OnInit, OnDestroy {
     this.pagination = this.listPages.slice(this.startPage, this.endPage);
   }
 
+  receiveDelete($event: boolean) {
+    if ($event) {
+      this.page = 0;
+      this.totalPages = 0;
+      this.listPages = [];
+      this.pagination = [];
+      this.startPage = 0;
+      this.endPage = this.limit;
+      this.getVacantsRecruiter(this.uid, this.page, this.limit, true);
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.vacantSuscription) {
       this.vacantSuscription.unsubscribe();

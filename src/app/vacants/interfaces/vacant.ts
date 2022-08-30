@@ -24,3 +24,8 @@ export interface ResponseVacant {
   message: string;
   vacant: DataVacant;
 }
+
+export interface ResponseVacantDelete {
+  delete: boolean;
+  message: string;
+}
