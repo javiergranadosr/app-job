@@ -1,15 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/auth/interfaces/login';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { DataVacant } from '../interfaces/vacant';
+import { VacantService } from '../services/vacant.service';
 
 @Component({
   selector: 'app-detail-vacant',
   templateUrl: './detail-vacant.component.html',
-  styleUrls: ['./detail-vacant.component.css']
+  styleUrls: ['./detail-vacant.component.css'],
 })
-export class DetailVacantComponent implements OnInit {
+export class DetailVacantComponent implements OnInit, OnDestroy {
+  detailVacantSubscription: Subscription = new Subscription();
+  detailVacant!: DataVacant;
+  user?: User;
 
-  constructor() { }
+  constructor(
+    private vacantService: VacantService,
+    private activedRoute: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.getDetailVacant();
+    this.user = this.authService.dataUser
+      ? this.authService.dataUser
+      : undefined;
   }
 
+  getDetailVacant() {
+    const id: string = this.activedRoute.snapshot.params['id'];
+    this.detailVacantSubscription = this.vacantService
+      .detailVacant(id)
+      .subscribe((vacant) => {
+        this.detailVacant = vacant;
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.detailVacantSubscription) {
+      this.detailVacantSubscription.unsubscribe();
+    }
+  }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DetailCategory } from 'src/app/home/interfaces/category';
-import { Salary } from 'src/app/home/interfaces/salary';
+import { DetailSalary } from 'src/app/home/interfaces/salary';
 import { FilterService } from 'src/app/home/services/filter.service';
 import { DataVacant } from '../interfaces/vacant';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
@@ -18,9 +18,10 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 })
 export class NewVacantComponent implements OnInit, OnDestroy {
   uid: string = '';
-  salaries: Salary[] = [];
+  salaries: DetailSalary[] = [];
   categories: DetailCategory[] = [];
-  salarySubscription!: Subscription;
+  salariesSubscription!: Subscription;
+  categoriesSubscription!: Subscription;
   formatsRequired: string[] = ['image/gif', 'image/png', 'image/jpeg'];
   image!: File;
   createVacantSubscription!: Subscription;
@@ -47,11 +48,23 @@ export class NewVacantComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.uid = this.authService.dataUser ? this.authService.dataUser.uid : '';
-    this.salaries = this.filterService.getSalaries();
-    this.salarySubscription = this.filterService
+    this.getCategories();
+    this.getSalaries();
+  }
+
+  getCategories() {
+    this.categoriesSubscription = this.filterService
       .getCategories()
       .subscribe(({ categories, total }) => {
         this.categories = categories;
+      });
+  }
+
+  getSalaries() {
+    this.salariesSubscription = this.filterService
+      .getSalaries()
+      .subscribe(({ salaries, total }) => {
+        this.salaries = salaries;
       });
   }
 
@@ -111,8 +124,13 @@ export class NewVacantComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.salaries = [];
     this.categories = [];
-    if (this.salarySubscription) {
-      this.salarySubscription.unsubscribe();
+
+    if (this.categoriesSubscription) {
+      this.categoriesSubscription.unsubscribe();
+    }
+
+    if (this.salariesSubscription) {
+      this.salariesSubscription.unsubscribe();
     }
   }
 }

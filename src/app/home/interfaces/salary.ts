@@ -1,4 +1,9 @@
 export interface Salary {
-  id: number;
+  total: number;
+  salaries: DetailSalary[];
+}
+
+export interface DetailSalary {
   name: string;
+  uid: string;
 }

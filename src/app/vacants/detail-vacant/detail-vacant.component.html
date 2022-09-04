@@ -1,24 +1,26 @@
 <section
+  *ngIf="detailVacant; else empty"
   class="container m-auto mt-10 mb-10 bg-white md:w-2/3 lg:w-1/2 p-5 rounded-md"
 >
   <h3 class="mb-5 text-neutral-800 font-bold text-lg text-center lg:text-xl">
-    Desarrollador frontend
+    {{ detailVacant.title | titlecase }}
   </h3>
   <div class="block m-auto bg-neutral-100 p-5 rounded-md">
     <div>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Empresa:</strong> Uber
+        <strong>Empresa:</strong> {{ detailVacant.company }}
       </h4>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Ultimo día para postularse:</strong> 17/08/2022
+        <strong>Ultimo día para postularse:</strong>
+        {{ detailVacant.lastDate | date: "dd/MM/yyyy" }}
       </h4>
     </div>
     <div>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Categoría:</strong> Backend
+        <strong>Categoría:</strong> {{ detailVacant.category.name | titlecase }}
       </h4>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Salario:</strong> $1000
+        <strong>Salario:</strong> {{ detailVacant.salary.name }}
       </h4>
     </div>
   </div>
@@ -26,8 +28,8 @@
   <div class="mt-7 flex flex-col flex-wrap items-center">
     <div class="w-1/2 md:w-full">
       <img
-        src="https://picsum.photos/200"
-        alt=""
+        [src]="detailVacant.image"
+        alt="Logo de vacante"
         class="block m-auto rounded-md md:w-1/3"
       />
     </div>
@@ -38,22 +40,15 @@
         Descripción del puesto
       </h4>
       <p class="text-sm lg:text-base text-neutral-800 text-center md:text-left">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut obcaecati
-        rem maiores earum repellat! Tempora molestiae, quidem repellat delectus
-        maxime aspernatur numquam fugit, maiores explicabo harum quis corrupti
-        cum quaerat in similique, assumenda animi perferendis labore saepe
-        molestias temporibus officiis. Consequuntur reiciendis, ipsam at porro
-        minima dolor eaque est vero obcaecati rerum. Culpa quaerat eos sit
-        numquam incidunt error, magnam corporis voluptatibus, dolores voluptates
-        asperiores natus libero, eveniet quae facilis modi. Quam maiores animi
-        amet voluptates, quia et, nihil perferendis cum magnam labore soluta aut
-        neque tempore eos iusto modi, unde dignissimos ut voluptate pariatur
-        iure ipsum velit. Aperiam, corporis.
+        {{ detailVacant.description }}
       </p>
     </div>
   </div>
 
-  <div class="block m-auto bg-zinc-200 p-5 rounded-md mt-7">
+  <div
+    class="block m-auto bg-zinc-200 p-5 rounded-md mt-7"
+    *ngIf="user && user.roleId.name === 'DEVELOPER'"
+  >
     <h4
       class="mb-5 mt-5 text-neutral-800 font-bold text-md text-center lg:text-lg"
     >
@@ -69,7 +64,22 @@
     <button
       class="w-1/4 mt-2 h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
     >
-    Postularme
+      Postularme
     </button>
   </div>
+
+  <a
+    class="w-full block rounded-md  bg-slate-800 text-center hover:bg-slate-700 text-white mt-5"
+    routerLink="/vacants"
+  >
+    Regresar
+  </a>
 </section>
+
+<ng-template #empty>
+  <div
+    class="bg-gray-50 rounded-lg py-5 px-6 mb-4 text-base text-gray-500 text-center mt-"
+  >
+    No se encontró información de la vacante, intente nuevamente.
+  </div>
+</ng-template>

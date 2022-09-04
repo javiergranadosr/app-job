@@ -43,7 +43,7 @@
         formControlName="salary"
       >
         <option value="">Seleccione un salario</option>
-        <option *ngFor="let salary of salaries" [value]="salary.id">
+        <option *ngFor="let salary of salaries" [value]="salary.uid">
           {{ salary.name }}
         </option>
       </select>

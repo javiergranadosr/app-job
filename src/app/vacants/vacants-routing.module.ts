@@ -17,7 +17,7 @@ const routes: Routes = [
         component: NewVacantComponent,
       },
       {
-        path: 'detail',
+        path: 'detail/:id',
         component: DetailVacantComponent
       }
     ],

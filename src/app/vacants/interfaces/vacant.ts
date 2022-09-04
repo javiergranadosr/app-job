@@ -5,14 +5,14 @@ export interface ListVacant {
 
 export interface DataVacant {
   title: string;
-  salary: number;
+  salary: Info;
   category: Info;
   company: string;
   lastDate: string;
   description: string;
   image: string | File;
   author: Info | string;
-  uid?: string
+  uid?: string,
 }
 
 export interface Info {

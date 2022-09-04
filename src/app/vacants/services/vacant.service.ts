@@ -71,4 +71,19 @@ export class VacantService {
         })
       );
   }
+
+  detailVacant(id: string) {
+    const ep: string = `${this.urlBase}/vacants/detailVacant/${id}`;
+    return this.http.get<DataVacant>(ep, { headers: this.headers }).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.log(error);
+        throw new Error(
+          'Hubo un error al obtener la vacante, favor de contactar a un administrador.'
+        );
+      })
+    );
+  }
 }

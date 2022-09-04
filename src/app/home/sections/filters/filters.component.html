@@ -31,7 +31,7 @@
           class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md px-2"
         >
           <option value="0">Seleccione un salario</option>
-          <option *ngFor="let salary of salaries" [value]="salary.id">
+          <option *ngFor="let salary of salaries" [value]="salary.uid">
             {{ salary.name }}
           </option>
         </select>

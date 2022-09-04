@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Category, DetailCategory } from '../../interfaces/category';
-import { Salary } from '../../interfaces/salary';
+import { DetailCategory } from '../../interfaces/category';
+import { DetailSalary } from '../../interfaces/salary';
 import { FilterService } from '../../services/filter.service';
 
 @Component({
@@ -10,26 +10,44 @@ import { FilterService } from '../../services/filter.service';
   styleUrls: ['./filters.component.css'],
 })
 export class FiltersComponent implements OnInit, OnDestroy {
-  salaries: Salary[] = [];
+  salaries: DetailSalary[] = [];
   categories: DetailCategory[] = [];
-  filterSubscription!: Subscription;
+  categoriesSubscription!: Subscription;
+  salariesSubscription!: Subscription;
 
   constructor(private filterService: FilterService) {}
 
   ngOnInit(): void {
-    this.salaries = this.filterService.getSalaries();
-    this.filterSubscription = this.filterService
+    this.getCategories();
+    this.getSalaries();
+  }
+
+  getCategories() {
+    this.categoriesSubscription = this.filterService
       .getCategories()
       .subscribe(({ categories, total }) => {
         this.categories = categories;
       });
   }
 
+  getSalaries() {
+    this.salariesSubscription = this.filterService
+      .getSalaries()
+      .subscribe(({ salaries, total }) => {
+        this.salaries = salaries;
+      });
+  }
+
   ngOnDestroy(): void {
     this.salaries = [];
     this.categories = [];
-    if (this.filterSubscription) {
-      this.filterSubscription.unsubscribe();
+
+    if (this.categoriesSubscription) {
+      this.categoriesSubscription.unsubscribe();
+    }
+
+    if (this.salariesSubscription) {
+      this.salariesSubscription.unsubscribe();
     }
   }
 }
