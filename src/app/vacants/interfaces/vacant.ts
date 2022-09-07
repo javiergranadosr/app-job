@@ -10,8 +10,8 @@ export interface DataVacant {
   company: string;
   lastDate: string;
   description: string;
-  image: string | File;
-  author: Info | string;
+  image?: string | File;
+  author?: Info | string;
   uid?: string,
 }
 

@@ -41,7 +41,7 @@ export class CardVacantComponent implements OnInit, OnDestroy {
   }
 
   editVacant(id: string) {
-    //this.router.navigate(['vacants', 'detail', id]);
+    this.router.navigate(['vacants', 'edit', id]);
   }
 
   ngOnDestroy(): void {

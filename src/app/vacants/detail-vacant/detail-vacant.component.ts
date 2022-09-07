@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/auth/interfaces/login';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { LoadingService } from 'src/app/shared/services/loading.service';
 import { DataVacant } from '../interfaces/vacant';
 import { VacantService } from '../services/vacant.service';
 
@@ -19,7 +20,8 @@ export class DetailVacantComponent implements OnInit, OnDestroy {
   constructor(
     private vacantService: VacantService,
     private activedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -30,11 +32,13 @@ export class DetailVacantComponent implements OnInit, OnDestroy {
   }
 
   getDetailVacant() {
+    this.loadingService.loading('Cargando información…');
     const id: string = this.activedRoute.snapshot.params['id'];
     this.detailVacantSubscription = this.vacantService
       .detailVacant(id)
       .subscribe((vacant) => {
         this.detailVacant = vacant;
+        this.loadingService.removedLoading();
       });
   }
 

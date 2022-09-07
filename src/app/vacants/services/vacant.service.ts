@@ -86,4 +86,18 @@ export class VacantService {
       })
     );
   }
+
+  updateVacant(data: DataVacant, id: string) {
+    const ep: string = `${this.urlBase}/vacants/update/${id}`;
+    return this.http
+      .put<ResponseVacant>(ep, data, { headers: this.headers })
+      .pipe(
+        map((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return of(error);
+        })
+      );
+  }
 }

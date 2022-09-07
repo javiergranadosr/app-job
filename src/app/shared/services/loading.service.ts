@@ -7,8 +7,8 @@ import { Loading } from 'notiflix/build/notiflix-loading-aio';
 export class LoadingService {
   constructor() {}
 
-  loading() {
-    Loading.pulse('Cargando vacantes...', {
+  loading(message: string = 'Cargando vacantes...') {
+    Loading.pulse(message, {
       svgColor: 'rgb(241 245 249)',
     });
   }

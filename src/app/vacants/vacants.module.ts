@@ -8,6 +8,7 @@ import { CardVacantComponent } from './components/card-vacant/card-vacant.compon
 import { DetailVacantComponent } from './detail-vacant/detail-vacant.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditVacantComponent } from './edit-vacant/edit-vacant.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     VacantsComponent,
     CardVacantComponent,
     DetailVacantComponent,
+    EditVacantComponent,
   ],
   imports: [
     CommonModule,

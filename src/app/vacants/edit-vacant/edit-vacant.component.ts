@@ -1,33 +1,35 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { DetailCategory } from 'src/app/home/interfaces/category';
 import { DetailSalary } from 'src/app/home/interfaces/salary';
 import { FilterService } from 'src/app/home/services/filter.service';
-import { DataVacant } from '../interfaces/vacant';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { VacantService } from '../services/vacant.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataVacant } from '../interfaces/vacant';
+import { LoadingService } from 'src/app/shared/services/loading.service';
 import { ResponseError } from 'src/app/shared/interfaces/error';
 import { StorageService } from 'src/app/shared/services/storage.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-new-vacant',
-  templateUrl: './new-vacant.component.html',
-  styleUrls: ['./new-vacant.component.css'],
+  selector: 'app-edit-vacant',
+  templateUrl: './edit-vacant.component.html',
+  styleUrls: ['./edit-vacant.component.css'],
 })
-export class NewVacantComponent implements OnInit, OnDestroy {
+export class EditVacantComponent implements OnInit, OnDestroy {
   uid: string = '';
   salaries: DetailSalary[] = [];
   categories: DetailCategory[] = [];
   salariesSubscription!: Subscription;
   categoriesSubscription!: Subscription;
+  detailVacantSubscription!: Subscription;
+  updateVacantSubscription!: Subscription;
+  errorMesagges: string[] = [];
   formatsRequired: string[] = ['image/gif', 'image/png', 'image/jpeg'];
   image!: File;
-  createVacantSubscription!: Subscription;
-  errors: ResponseError[] = [];
-  errorMesagges: string[] = [];
+  imageSelected: string = '';
+  id: string = '';
 
   vacantForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
@@ -36,22 +38,41 @@ export class NewVacantComponent implements OnInit, OnDestroy {
     company: ['', Validators.required],
     lastDate: ['', Validators.required],
     description: ['', Validators.required],
-    image: ['', Validators.required],
+    image: [''],
   });
 
   constructor(
-    private filterService: FilterService,
     private fb: FormBuilder,
-    private authService: AuthService,
+    private filterService: FilterService,
     private vacantService: VacantService,
-    private storageService: StorageService,
-    private router: Router
+    private activedRoute: ActivatedRoute,
+    private loadingService: LoadingService,
+    private router: Router,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
-    this.uid = this.authService.dataUser ? this.authService.dataUser.uid : '';
-    this.getCategories();
+    this.id = this.activedRoute.snapshot.params['id'];
     this.getSalaries();
+    this.getCategories();
+    this.getDetailVacant();
+  }
+
+  initForm(vacant: DataVacant) {
+    this.vacantForm.get('title')?.setValue(vacant.title);
+    this.vacantForm.get('salary')?.setValue(vacant.salary._id);
+    this.vacantForm.get('category')?.setValue(vacant.category._id);
+    this.vacantForm.get('company')?.setValue(vacant.company);
+    this.vacantForm.get('lastDate')?.setValue(vacant.lastDate);
+    this.vacantForm.get('description')?.setValue(vacant.description);
+  }
+
+  getSalaries() {
+    this.salariesSubscription = this.filterService
+      .getSalaries()
+      .subscribe(({ salaries, total }) => {
+        this.salaries = salaries;
+      });
   }
 
   getCategories() {
@@ -62,11 +83,14 @@ export class NewVacantComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSalaries() {
-    this.salariesSubscription = this.filterService
-      .getSalaries()
-      .subscribe(({ salaries, total }) => {
-        this.salaries = salaries;
+  getDetailVacant() {
+    this.loadingService.loading('Cargando información…');
+    this.detailVacantSubscription = this.vacantService
+      .detailVacant(this.id)
+      .subscribe((vacant) => {
+        this.initForm(vacant);
+        this.imageSelected = vacant.image as string;
+        this.loadingService.removedLoading();
       });
   }
 
@@ -86,22 +110,22 @@ export class NewVacantComponent implements OnInit, OnDestroy {
     this.image = image;
   }
 
-  createVacant() {
+  editVacant() {
     if (this.vacantForm.valid) {
       const { title, salary, category, company, lastDate, description } =
         this.vacantForm.value;
+
       const data: DataVacant = {
-        author: this.uid,
         title,
         salary,
         category,
         company,
         lastDate,
         description,
-        image: '0',
       };
-      this.createVacantSubscription = this.vacantService
-        .createVacant(data)
+
+      this.updateVacantSubscription = this.vacantService
+        .updateVacant(data, this.id)
         .subscribe((response) => {
           if (response.status === 400) {
             this.errorMesagges = [];
@@ -111,12 +135,16 @@ export class NewVacantComponent implements OnInit, OnDestroy {
             });
             return;
           }
-          Notify.success('Vacante creada y publicada con éxito.');
-          this.storageService.saveFileSuscribe(
-            'vacants',
-            response.vacant.uid,
-            this.image
-          );
+
+          if (this.image) {
+            this.storageService.saveFileSuscribe(
+              'vacants',
+              response.vacant.uid,
+              this.image
+            );
+          }
+
+          Notify.success('Vacante actualizada con éxito.');
           this.router.navigateByUrl('/vacants');
         });
     } else {
@@ -128,12 +156,20 @@ export class NewVacantComponent implements OnInit, OnDestroy {
     this.salaries = [];
     this.categories = [];
 
+    if (this.detailVacantSubscription) {
+      this.detailVacantSubscription.unsubscribe();
+    }
+
     if (this.categoriesSubscription) {
       this.categoriesSubscription.unsubscribe();
     }
 
     if (this.salariesSubscription) {
       this.salariesSubscription.unsubscribe();
+    }
+
+    if (this.updateVacantSubscription) {
+      this.updateVacantSubscription.unsubscribe();
     }
   }
 }
