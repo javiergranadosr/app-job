@@ -63,6 +63,10 @@ export class CardVacantComponent implements OnInit, OnDestroy {
       });
   }
 
+  viewCandidates(id: string) {
+    this.router.navigate(['vacants', 'candidates', id]);
+  }
+
   ngOnDestroy(): void {
     if (this.deleteVacantSubscription) {
       this.deleteVacantSubscription.unsubscribe();

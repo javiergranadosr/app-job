@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CandidatesComponent } from './candidates/candidates.component';
 import { DetailVacantComponent } from './detail-vacant/detail-vacant.component';
 import { EditVacantComponent } from './edit-vacant/edit-vacant.component';
 import { NewVacantComponent } from './new-vacant/new-vacant.component';
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: EditVacantComponent,
+      },
+      {
+        path: 'candidates/:id',
+        component: CandidatesComponent,
       },
     ],
   },

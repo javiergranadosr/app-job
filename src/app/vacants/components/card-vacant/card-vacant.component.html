@@ -1,5 +1,5 @@
 <div
-  class="w-full bg-white md:flex md:flex-row md:flex-wrap md:justify-between md:items-center border-b-2 shadow-2xl shadow-white rounded"
+  class="w-full bg-white md:flex md:flex-row md:flex-wrap md:justify-between md:items-center border-b-2 shadow-2xl shadow-white rounded mt-2"
 >
   <div class="p-5">
     <h1 class="text-neutral-800 font-bold text-2xl pointer">
@@ -17,6 +17,7 @@
   <div class="flex flex-row justify-end flex-wrap">
     <button
       class="md:w-auto w-full h-8 rounded-md px-2 bg-slate-800 text-white hover:bg-slate-700 text-whitee m-3"
+      (click)="viewCandidates(dataVacant.uid!)"
     >
       <span> {{ totalCandidates }}</span> Candidatos
     </button>

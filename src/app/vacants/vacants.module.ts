@@ -9,6 +9,8 @@ import { DetailVacantComponent } from './detail-vacant/detail-vacant.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditVacantComponent } from './edit-vacant/edit-vacant.component';
+import { CandidatesComponent } from './candidates/candidates.component';
+import { CardCandidateComponent } from './components/card-candidate/card-candidate.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { EditVacantComponent } from './edit-vacant/edit-vacant.component';
     CardVacantComponent,
     DetailVacantComponent,
     EditVacantComponent,
+    CandidatesComponent,
+    CardCandidateComponent,
   ],
   imports: [
     CommonModule,
