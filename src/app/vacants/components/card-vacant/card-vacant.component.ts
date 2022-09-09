@@ -11,6 +11,7 @@ import { DataVacant } from '../../interfaces/vacant';
 import { VacantService } from '../../services/vacant.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Router } from '@angular/router';
+import { CandidatesService } from '../../services/candidates.service';
 
 @Component({
   selector: 'app-card-vacant',
@@ -21,10 +22,20 @@ export class CardVacantComponent implements OnInit, OnDestroy {
   @Input() dataVacant!: DataVacant;
   @Output() deleted = new EventEmitter<boolean>();
   deleteVacantSubscription!: Subscription;
+  totalCandidates: number = 0;
+  totalCandidatesSubscription!: Subscription;
 
-  constructor(private vacantService: VacantService, private router: Router) {}
+  constructor(
+    private vacantService: VacantService,
+    private router: Router,
+    private candidatesService: CandidatesService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.dataVacant.uid) {
+      this.getTotalCandidatesByVacant(this.dataVacant.uid);
+    }
+  }
 
   deleteVacant(id: string) {
     this.vacantService.deleteVacant(id).subscribe((response) => {
@@ -44,9 +55,21 @@ export class CardVacantComponent implements OnInit, OnDestroy {
     this.router.navigate(['vacants', 'edit', id]);
   }
 
+  getTotalCandidatesByVacant(id: string) {
+    this.totalCandidatesSubscription = this.candidatesService
+      .getTotalCandidatesByVacant(id)
+      .subscribe((totalCandidates) => {
+        this.totalCandidates = totalCandidates;
+      });
+  }
+
   ngOnDestroy(): void {
     if (this.deleteVacantSubscription) {
       this.deleteVacantSubscription.unsubscribe();
+    }
+
+    if (this.totalCandidatesSubscription) {
+      this.totalCandidatesSubscription.unsubscribe();
     }
   }
 }
