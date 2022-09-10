@@ -1,18 +1,63 @@
 <section class="bg-slate-100 py-2 px-3 mt-10">
-  <h3 class="mb-5 text-neutral-800 text-lg text-center lg:text-xl">
-    Candidatos en la vacante <strong>Vacant 1</strong>
+  <h3
+    class="mb-5 text-neutral-800 text-lg text-center lg:text-xl"
+    *ngIf="candidates && candidates.length > 0"
+  >
+    Candidatos en la vacante <strong>{{ nameVacant | titlecase }}</strong>
   </h3>
   <div class="container m-auto md:w-2/3 lg:w-1/2 h-full">
-    <span>Total candidatos: <strong>0</strong></span>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
-    <app-card-candidate></app-card-candidate>
+    <ng-container *ngIf="candidates && candidates.length > 0; else empty">
+      <span
+        >Total candidatos: <strong>{{ totalCandidates }}</strong></span
+      >
+      <app-card-candidate
+        *ngFor="let candidate of candidates"
+        [candidate]="candidate"
+      ></app-card-candidate>
+      <div class="my-10 flex flex-row flex-wrap justify-center items-center">
+        <div
+          class="bg-slate-200 hover:bg-slate-300 h-10 leading-10 rounded-full text-center text-neutral-800 cursor-pointer mx-1 flex justify-center items-center w-32"
+          [ngClass]="startPage === 0 ? 'pointer-events-none opacity-50' : ''"
+          (click)="prevPage()"
+        >
+          <img src="/assets/icon_prev.svg" alt="Icono anterior" class="w-7" />
+          <span class="text-base">Anterior</span>
+        </div>
+
+        <span
+          *ngFor="let p of pagination"
+          class="h-10 w-10 leading-10 rounded-full text-center cursor-pointer mx-1 hidden sm:block"
+          [ngClass]="
+            listPages.indexOf(p) * limit === page
+              ? 'bg-slate-800 text-white'
+              : 'bg-slate-200 hover:bg-slate-300 text-neutral-800'
+          "
+          (click)="changeCandidates(p)"
+          >{{ p }}</span
+        >
+        <div
+          class="bg-slate-200 hover:bg-slate-300 h-10 leading-10 rounded-full text-center text-neutral-800 cursor-pointer mx-1 flex justify-center items-center w-32"
+          [ngClass]="
+            endPage >= totalPages ? 'pointer-events-none opacity-50' : ''
+          "
+          (click)="nextPage()"
+        >
+          <span class="text-base">Siguiente</span>
+          <img
+            src="/assets/icon_prev.svg"
+            alt="Icono anterior"
+            class="w-7 rotate-180"
+          />
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #empty>
+      <div
+        class="bg-gray-50 rounded-lg py-5 px-6 mb-4 text-base text-gray-500 text-center"
+      >
+        No se encontraron resultados.
+      </div>
+    </ng-template>
   </div>
 </section>

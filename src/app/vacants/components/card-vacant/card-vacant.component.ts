@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { DataVacant } from '../../interfaces/vacant';
 import { VacantService } from '../../services/vacant.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
 import { Router } from '@angular/router';
 import { CandidatesService } from '../../services/candidates.service';
 
@@ -38,17 +39,25 @@ export class CardVacantComponent implements OnInit, OnDestroy {
   }
 
   deleteVacant(id: string) {
-    this.vacantService.deleteVacant(id).subscribe((response) => {
-      if (response.delete) {
-        Notify.success(response.message);
-        this.deleted.emit(true);
-      } else {
-        Notify.failure(
-          'Hubo un error eliminar vacante. Favor de hablar con un administrador.'
-        );
-        this.deleted.emit(false);
+    Confirm.show(
+      'Notificación del sistema',
+      '¿Desea eliminar está vacante?',
+      'Aceptar',
+      'Cancelar',
+      () => {
+        this.vacantService.deleteVacant(id).subscribe((response) => {
+          if (response.delete) {
+            Notify.success(response.message);
+            this.deleted.emit(true);
+          } else {
+            Notify.failure(
+              'Hubo un error eliminar vacante. Favor de hablar con un administrador.'
+            );
+            this.deleted.emit(false);
+          }
+        });
       }
-    });
+    );
   }
 
   editVacant(id: string) {
