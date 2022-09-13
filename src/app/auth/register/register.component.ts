@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Router } from '@angular/router';
 import { ResponseError } from '../../shared/interfaces/error';
+import { LoadingService } from 'src/app/shared/services/loading.service';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +39,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +81,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   register() {
     if (this.registerForm.valid) {
+      this.loadingService.loading("Creando cuenta...");
       const { name, email, role, password } = this.registerForm.value;
       const data: Register = {
         name,
@@ -95,8 +98,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             errors.forEach(({ msg }, index) => {
               this.errorMesagges.push(msg);
             });
+            this.loadingService.removedLoading();
             return;
           }
+          this.loadingService.removedLoading();
           Notify.success('Cuenta creada con éxito.');
           setTimeout(() => {
             this.router.navigateByUrl('/auth');

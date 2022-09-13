@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResponseError } from 'src/app/shared/interfaces/error';
+import { LoadingService } from 'src/app/shared/services/loading.service';
 import { Login } from '../interfaces/login';
 import { AuthService } from '../services/auth.service';
 
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {}
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     if (this.loginForm.valid) {
+      this.loadingService.loading("Iniciando sesión...");
       const { email, password } = this.loginForm.value;
       const data: Login = { email, password };
       this.loginSuscription = this.authService
@@ -50,8 +53,10 @@ export class LoginComponent implements OnInit, OnDestroy {
             } else {
               this.errorMesagges.push(response.error.message);
             }
+            this.loadingService.removedLoading();
             return;
           }
+          this.loadingService.removedLoading();
           this.router.navigateByUrl('/home');
         });
     } else {
