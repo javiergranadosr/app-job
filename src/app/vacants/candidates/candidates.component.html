@@ -26,7 +26,7 @@
 
         <span
           *ngFor="let p of pagination"
-          class="h-10 w-10 leading-10 rounded-full text-center cursor-pointer mx-1 hidden sm:block"
+          class="h-10 w-10 leading-10 rounded-full text-center cursor-pointer mx-1"
           [ngClass]="
             listPages.indexOf(p) * limit === page
               ? 'bg-slate-800 text-white'
