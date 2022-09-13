@@ -1,0 +1,103 @@
+<section
+  class="container m-auto mt-10 mb-10 bg-white md:w-2/3 lg:w-1/2 p-5 rounded-md"
+>
+  <h3 class="mb-5 text-neutral-800 font-bold text-lg text-center lg:text-xl">
+    Perfil de usuario
+  </h3>
+  <div class="w-full">
+    <img
+      src="./assets/img/default_image.jpg"
+      alt="Imagen de usuario"
+      class="block m-auto rounded-full w-28 h-28"
+    />
+    <h4 class="mt-2 text-neutral-800 font-bold text-lg text-center lg:text-xl">
+      demo.dev
+    </h4>
+    <p class="text-sm lg:text-base text-neutral-800 text-center md:text-center">
+      demo.dev@demo.com
+    </p>
+  </div>
+
+  <form class="mt-5" [formGroup]="userForm" (ngSubmit)="editProfile()">
+    <div class="block m-auto w-4/5">
+      <label class="font-semibold"
+        >Nombre completo<span class="text-red-800">*</span>:</label
+      >
+      <input
+        type="text"
+        placeholder="Nombre completo"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('name')
+        }"
+        formControlName="name"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('name')"
+        >El nombre es requerido.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">Correo electrónico:</label>
+      <input
+        type="email"
+        placeholder="demo@demo.com"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600':
+            validateFormatEmail() || emailRequired()
+        }"
+        formControlName="email"
+      />
+      <small class="text-red-600 text-sm" *ngIf="emailRequired()"
+        >El correo electrónico es requerido.</small
+      >
+
+      <small class="text-red-600 text-sm" *ngIf="validateFormatEmail()"
+        >El formato del correo electrónico es invalido.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">Contraseña actual:</label>
+      <input
+        type="password"
+        placeholder="******"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('password')
+        }"
+        formControlName="password"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('password')">
+        La contraseña es requerida.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">Nueva contraseña:</label>
+      <input
+        type="password"
+        placeholder="******"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('newPassword')
+        }"
+        formControlName="newPassword"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('newPassword')">
+        La contraseña es requerida y debe tener un mínimo de 6
+        caracteres.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-5">
+      <button
+        type="submit"
+        class="w-full h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
+      >
+        Editar perfil
+      </button>
+    </div>
+  </form>
+</section>

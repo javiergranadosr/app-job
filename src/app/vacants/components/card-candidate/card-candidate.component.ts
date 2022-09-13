@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Candidate } from '../../interfaces/candidate';
 
 @Component({
@@ -8,11 +9,11 @@ import { Candidate } from '../../interfaces/candidate';
 })
 export class CardCandidateComponent implements OnInit {
   @Input() candidate!: Candidate;
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   viewProfile(uid: string) {
-    console.log(uid);
+    this.router.navigate(['profile']);
   }
 }
