@@ -6,22 +6,24 @@
   </h3>
   <div class="w-full">
     <img
-      src="./assets/img/default_image.jpg"
+      [src]="imageProfile"
       alt="Imagen de usuario"
       class="block m-auto rounded-full w-28 h-28"
     />
     <h4 class="mt-2 text-neutral-800 font-bold text-lg text-center lg:text-xl">
-      demo.dev
+      {{ nameProfile }}
     </h4>
     <p class="text-sm lg:text-base text-neutral-800 text-center md:text-center">
-      demo.dev@demo.com
+      {{ emailProfile }}
     </p>
   </div>
 
   <form class="mt-5" [formGroup]="userForm" (ngSubmit)="editProfile()">
-
     <ng-container *ngIf="errorMesagges.length > 0">
-      <app-alert  *ngFor="let error of errorMesagges" [message]="error"></app-alert>
+      <app-alert
+        *ngFor="let error of errorMesagges"
+        [message]="error"
+      ></app-alert>
     </ng-container>
 
     <div class="block m-auto w-4/5">
@@ -60,7 +62,9 @@
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
-      <label class="font-semibold">Número de teléfono<span class="text-red-800">*</span>:</label>
+      <label class="font-semibold"
+        >Número de teléfono<span class="text-red-800">*</span>:</label
+      >
       <input
         type="text"
         placeholder="000-000-0000"
@@ -80,7 +84,9 @@
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
-      <label class="font-semibold">Ciudad<span class="text-red-800">*</span>:</label>
+      <label class="font-semibold"
+        >Ciudad<span class="text-red-800">*</span>:</label
+      >
       <input
         type="text"
         placeholder="Ciudad"
@@ -117,15 +123,12 @@
         formControlName="newPassword"
       />
       <small class="text-red-600 text-sm" *ngIf="validateField('newPassword')">
-        La contraseña debe tener un mínimo de 6
-        caracteres.</small
+        La contraseña debe tener un mínimo de 6 caracteres.</small
       >
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
-      <label class="font-semibold">
-        Foto de perfil:</label
-      >
+      <label class="font-semibold"> Foto de perfil:</label>
       <input
         class="w-full rounded-md text-base px-2 py-1.5"
         type="file"

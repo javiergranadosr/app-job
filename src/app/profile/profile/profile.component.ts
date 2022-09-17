@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ResponseError } from 'src/app/shared/interfaces/error';
 import { User } from '../../auth/interfaces/login';
 import { AuthService } from '../../auth/services/auth.service';
-import { EditProfile } from '../interfaces/profile';
+import { EditProfile, Profile, ResponseProfile } from '../interfaces/profile';
 import { ProfileService } from '../services/profile.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -27,12 +27,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
     city: ['', Validators.required],
     password: [''],
     newPassword: ['', [Validators.minLength(6)]],
+    image: [''],
   });
   updateProfileSusbcription!: Subscription;
   uid: string = '0';
   errorMesagges: string[] = [];
   formatsRequired: string[] = ['image/gif', 'image/png', 'image/jpeg'];
   image!: File;
+  dataProfileSusbcription!: Subscription;
+  imageProfile: string = '';
+  emailProfile: string = '';
+  nameProfile: string = '';
 
   constructor(
     private authService: AuthService,
@@ -51,6 +56,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (this.user) {
       this.uid = this.user.uid;
     }
+
+    this.setDataProfile();
   }
 
   validateField(field: string): boolean | undefined {
@@ -96,7 +103,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         password,
         newPassword,
       };
-      this.profileService
+      this.updateProfileSusbcription = this.profileService
         .updateProfile(this.uid, data)
         .subscribe((response) => {
           if (response.status === 400) {
@@ -123,7 +130,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
           this.loadingService.removedLoading();
           Notify.success('Cuenta actualizada con éxito.');
-
+          setTimeout(() => {
+            this.router.navigateByUrl('/home');
+          }, 2000);
           if (
             data.email.length > 0 ||
             data.password.length > 0 ||
@@ -140,9 +149,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  setDataProfile() {
+    this.loadingService.loading('Cargando datos de perfil...');
+    this.dataProfileSusbcription = this.profileService
+      .getProfileUserById(this.uid)
+      .subscribe((response) => {
+        this.userForm.get('name')?.setValue(response.name);
+        this.userForm.get('phone')?.setValue(response.phone);
+        this.userForm.get('city')?.setValue(response.city);
+
+        this.imageProfile = response.image
+          ? response.image
+          : './assets/img/default_image.jpg';
+
+        this.nameProfile = response.name ? response.name : '';
+        this.emailProfile = response.email ? response.email : '';
+
+        this.loadingService.removedLoading();
+      });
+  }
+
   ngOnDestroy(): void {
     if (this.updateProfileSusbcription) {
       this.updateProfileSusbcription.unsubscribe();
+    }
+    if (this.dataProfileSusbcription) {
+      this.dataProfileSusbcription.unsubscribe();
     }
   }
 }

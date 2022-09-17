@@ -9,12 +9,15 @@ export interface EditProfile {
 
 export interface ResponseProfile {
   message: string;
-  data?: {
-    name: string;
-    email: string;
-    roleId: string;
-    phone?: string;
-    city?: string;
-    uid: string;
-  };
+  data?: Profile;
+}
+
+export interface Profile {
+  name: string;
+  email: string;
+  roleId: string;
+  phone?: string;
+  city?: string;
+  uid: string;
+  image?: string;
 }

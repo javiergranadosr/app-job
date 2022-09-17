@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { EditProfile, ResponseProfile } from '../interfaces/profile';
+import { EditProfile, Profile, ResponseProfile } from '../interfaces/profile';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +29,20 @@ export class ProfileService {
           return of(error);
         })
       );
+  }
+
+  getProfileUserById(id: string) {
+    const ep: string = `${this.urlBase}/users/profile/${id}`;
+    return this.http.get<Profile>(ep, { headers: this.headers }).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.log(error);
+        throw new Error(
+          'Hubo un error al obtener perfil de usuario, favor de contactar a un administrador.'
+        );
+      })
+    );
   }
 }
