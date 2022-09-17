@@ -19,6 +19,11 @@
   </div>
 
   <form class="mt-5" [formGroup]="userForm" (ngSubmit)="editProfile()">
+
+    <ng-container *ngIf="errorMesagges.length > 0">
+      <app-alert  *ngFor="let error of errorMesagges" [message]="error"></app-alert>
+    </ng-container>
+
     <div class="block m-auto w-4/5">
       <label class="font-semibold"
         >Nombre completo<span class="text-red-800">*</span>:</label
@@ -44,17 +49,49 @@
         placeholder="demo@demo.com"
         class="w-full h-8 rounded-md text-base px-2"
         [ngClass]="{
-          'outline outline-2 outline-red-600':
-            validateFormatEmail() || emailRequired()
+          'outline outline-2 outline-red-600': validateFormat('email')
         }"
         formControlName="email"
       />
-      <small class="text-red-600 text-sm" *ngIf="emailRequired()"
-        >El correo electrónico es requerido.</small
-      >
 
-      <small class="text-red-600 text-sm" *ngIf="validateFormatEmail()"
+      <small class="text-red-600 text-sm" *ngIf="validateFormat('email')"
         >El formato del correo electrónico es invalido.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">Número de teléfono<span class="text-red-800">*</span>:</label>
+      <input
+        type="text"
+        placeholder="000-000-0000"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600':
+            validateFormat('phone') || fieldRequired('phone')
+        }"
+        formControlName="phone"
+      />
+      <small class="text-red-600 text-sm" *ngIf="fieldRequired('phone')"
+        >El número de teléfono es requerido.</small
+      >
+      <small class="text-red-600 text-sm" *ngIf="validateFormat('phone')"
+        >El formato del número de teléfono es invalido.</small
+      >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">Ciudad<span class="text-red-800">*</span>:</label>
+      <input
+        type="text"
+        placeholder="Ciudad"
+        class="w-full h-8 rounded-md text-base px-2"
+        [ngClass]="{
+          'outline outline-2 outline-red-600': validateField('city')
+        }"
+        formControlName="city"
+      />
+      <small class="text-red-600 text-sm" *ngIf="validateField('city')">
+        La ciudad es requerida.</small
       >
     </div>
 
@@ -64,14 +101,8 @@
         type="password"
         placeholder="******"
         class="w-full h-8 rounded-md text-base px-2"
-        [ngClass]="{
-          'outline outline-2 outline-red-600': validateField('password')
-        }"
         formControlName="password"
       />
-      <small class="text-red-600 text-sm" *ngIf="validateField('password')">
-        La contraseña es requerida.</small
-      >
     </div>
 
     <div class="block m-auto w-4/5 mt-2">
@@ -86,9 +117,21 @@
         formControlName="newPassword"
       />
       <small class="text-red-600 text-sm" *ngIf="validateField('newPassword')">
-        La contraseña es requerida y debe tener un mínimo de 6
+        La contraseña debe tener un mínimo de 6
         caracteres.</small
       >
+    </div>
+
+    <div class="block m-auto w-4/5 mt-2">
+      <label class="font-semibold">
+        Foto de perfil:</label
+      >
+      <input
+        class="w-full rounded-md text-base px-2 py-1.5"
+        type="file"
+        formControlName="image"
+        (change)="onFileChange($event)"
+      />
     </div>
 
     <div class="block m-auto w-4/5 mt-5">
