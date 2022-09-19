@@ -68,6 +68,7 @@ export class CandidatesComponent implements OnInit, OnDestroy {
         }
         this.loadingService.removedLoading();
       });
+      this.loadingService.removedLoading();
   }
 
   changePages() {

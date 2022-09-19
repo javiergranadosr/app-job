@@ -14,6 +14,6 @@ export class CardCandidateComponent implements OnInit {
   ngOnInit(): void {}
 
   viewProfile(uid: string) {
-    this.router.navigate(['profile', 'detail', 1]);
+    this.router.navigate(['profile', 'detail', uid]);
   }
 }

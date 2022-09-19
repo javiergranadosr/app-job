@@ -7,7 +7,7 @@
 
   <div class="w-full">
     <img
-      src="./assets/img/default_image.jpg"
+      [src]="imageProfile"
       alt="Imagen de usuario"
       class="block m-auto rounded-full w-28 h-28"
     />
@@ -16,16 +16,16 @@
   <div class="block m-auto bg-neutral-100 p-5 rounded-md mt-5">
     <div>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Nombre:</strong> Javier Granados Rojas
+        <strong>Nombre:</strong> {{ nameProfile }}
       </h4>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Número de teléfono:</strong> +52 000 000 0000
+        <strong>Número de teléfono:</strong> {{ phoneProfile }}
       </h4>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Correo electrónico:</strong> demo@demo.com
+        <strong>Correo electrónico:</strong> {{ emailProfile }}
       </h4>
       <h4 class="text-sm lg:text-base text-neutral-800">
-        <strong>Ciudad:</strong> Campeche
+        <strong>Ciudad:</strong> {{ cityProfile }}
       </h4>
     </div>
     <button
