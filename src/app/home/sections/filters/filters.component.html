@@ -2,7 +2,7 @@
   <h3 class="mb-2 text-neutral-800 font-bold text-lg text-center lg:text-xl">
     Buscar y filtrar vacantes
   </h3>
-  <form class="w-full">
+  <form class="w-full" [formGroup]="formFilter" (ngSubmit)="search()">
     <div
       class="flex flex-col items-center py-5 lg:flex-row lg:flex-wrap lg:justify-center"
     >
@@ -10,6 +10,7 @@
         <label class="font-semibold">Termino de búsqueda:</label>
         <input
           type="text"
+          formControlName="term"
           placeholder="Buscar por termino ej: Angular"
           class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md text-base px-2"
         />
@@ -17,6 +18,7 @@
       <div class="w-4/5 mt-2 lg:mt-0 lg:w-1/4 lg:mx-1">
         <label class="font-semibold">Categoría:</label>
         <select
+          formControlName="category"
           class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md px-2"
         >
           <option value="">Seleccione una categoría</option>
@@ -28,9 +30,10 @@
       <div class="w-4/5 mt-2 lg:mt-0 lg:w-1/4 lg:mx-1">
         <label class="font-semibold">Salario mensual:</label>
         <select
+          formControlName="salary"
           class="w-full h-8 border-solid border-1 border-cyan-50 rounded-md px-2"
         >
-          <option value="0">Seleccione un salario</option>
+          <option value="">Seleccione un salario</option>
           <option *ngFor="let salary of salaries" [value]="salary.uid">
             {{ salary.name }}
           </option>
@@ -39,11 +42,14 @@
     </div>
     <div class="flex flex-row justify-center mb-3 lg:justify-end actions">
       <button
+        type="button"
         class="w-3/12 lg:w-1/12 h-8 rounded-md px-2 bg-slate-800 hover:bg-slate-700 text-white mx-1"
+        (click)="reset()"
       >
         Limpiar
       </button>
       <button
+        type="submit"
         class="w-3/12 lg:w-1/12 h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
       >
         Buscar

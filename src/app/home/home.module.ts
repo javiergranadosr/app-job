@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { FiltersComponent } from './sections/filters/filters.component';
 import { ListVacantsComponent } from './sections/list-vacants/list-vacants.component';
 import { CardVacantComponent } from './components/card-vacant/card-vacant.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CardVacantComponent } from './components/card-vacant/card-vacant.compon
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class HomeModule { }

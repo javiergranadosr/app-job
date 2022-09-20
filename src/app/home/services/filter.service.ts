@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category, DetailCategory } from '../interfaces/category';
+import { Filter } from '../interfaces/filter';
 import { DetailSalary, Salary } from '../interfaces/salary';
 
 @Injectable({
@@ -10,6 +11,11 @@ import { DetailSalary, Salary } from '../interfaces/salary';
 })
 export class FilterService {
   private urlBase: string = environment.urlBase;
+  private filter$: BehaviorSubject<Filter> = new BehaviorSubject<Filter>({
+    term: '',
+    category: '',
+    salary: '',
+  });
 
   constructor(private http: HttpClient) {}
 
@@ -39,5 +45,13 @@ export class FilterService {
         );
       })
     );
+  }
+
+  setFilter(filter: Filter) {
+    this.filter$.next(filter);
+  }
+
+  getFilter$(): Observable<Filter> {
+    return this.filter$.asObservable();
   }
 }

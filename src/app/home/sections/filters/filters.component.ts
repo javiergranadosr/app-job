@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DetailCategory } from '../../interfaces/category';
+import { Filter } from '../../interfaces/filter';
 import { DetailSalary } from '../../interfaces/salary';
 import { FilterService } from '../../services/filter.service';
 
@@ -14,8 +16,14 @@ export class FiltersComponent implements OnInit, OnDestroy {
   categories: DetailCategory[] = [];
   categoriesSubscription!: Subscription;
   salariesSubscription!: Subscription;
+  formFilter: FormGroup = this.fb.group({
+    term: [''],
+    category: [''],
+    salary: [''],
+  });
+  dataFilter!: Filter;
 
-  constructor(private filterService: FilterService) {}
+  constructor(private filterService: FilterService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.getCategories();
@@ -36,6 +44,21 @@ export class FiltersComponent implements OnInit, OnDestroy {
       .subscribe(({ salaries, total }) => {
         this.salaries = salaries;
       });
+  }
+
+  search() {
+    this.dataFilter = {
+      term: this.formFilter.get('term')?.value,
+      category: this.formFilter.get('category')?.value,
+      salary: this.formFilter.get('salary')?.value,
+    };
+    this.filterService.setFilter(this.dataFilter);
+  }
+
+  reset() {
+    this.formFilter.get('term')?.setValue('');
+    this.formFilter.get('salary')?.setValue('');
+    this.formFilter.get('category')?.setValue('');
   }
 
   ngOnDestroy(): void {
