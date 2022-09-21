@@ -13,22 +13,27 @@ const routes: Routes = [
       {
         path: '',
         component: VacantsComponent,
+        title: 'Plataforma de trabajos | Vacantes publicadas',
       },
       {
         path: 'create',
         component: NewVacantComponent,
+        title: 'Plataforma de trabajos | Crear vacante',
       },
       {
         path: 'detail/:id',
         component: DetailVacantComponent,
+        title: 'Plataforma de trabajos | Detalle de la vacante',
       },
       {
         path: 'edit/:id',
         component: EditVacantComponent,
+        title: 'Plataforma de trabajos | Editar vacante',
       },
       {
         path: 'candidates/:id',
         component: CandidatesComponent,
+        title: 'Plataforma de trabajos | Candidatos',
       },
     ],
   },

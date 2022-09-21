@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
-    title: 'Iniciar sesión'
+    title: 'Plataforma de trabajos | Iniciar sesión',
   },
   {
     path: 'register',
     component: RegisterComponent,
-    title: 'Crear cuenta'
+    title: 'Plataforma de trabajos | Crear cuenta',
   },
 ];
 

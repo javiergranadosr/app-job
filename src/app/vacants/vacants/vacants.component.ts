@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
-import { DataVacant } from '../interfaces/vacant';
+import { DataVacant } from '../../shared/interfaces/vacant';
 import { VacantService } from '../services/vacant.service';
 
 @Component({

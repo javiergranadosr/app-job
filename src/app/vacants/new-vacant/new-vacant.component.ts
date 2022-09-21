@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { DetailCategory } from 'src/app/home/interfaces/category';
 import { DetailSalary } from 'src/app/home/interfaces/salary';
 import { FilterService } from 'src/app/home/services/filter.service';
-import { DataVacant } from '../interfaces/vacant';
+import { DataVacant } from '../../shared/interfaces/vacant';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { VacantService } from '../services/vacant.service';
 import { ResponseError } from 'src/app/shared/interfaces/error';

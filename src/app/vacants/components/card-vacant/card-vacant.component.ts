@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DataVacant } from '../../interfaces/vacant';
+import { DataVacant } from '../../../shared/interfaces/vacant';
 import { VacantService } from '../../services/vacant.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio';

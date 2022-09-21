@@ -26,6 +26,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   constructor(private filterService: FilterService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.initFilter();
     this.getCategories();
     this.getSalaries();
   }
@@ -46,6 +47,15 @@ export class FiltersComponent implements OnInit, OnDestroy {
       });
   }
 
+  initFilter() {
+    this.dataFilter = {
+      term: '',
+      category: '',
+      salary: '',
+    };
+    this.filterService.setFilter(this.dataFilter);
+  }
+
   search() {
     this.dataFilter = {
       term: this.formFilter.get('term')?.value,
@@ -59,6 +69,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
     this.formFilter.get('term')?.setValue('');
     this.formFilter.get('salary')?.setValue('');
     this.formFilter.get('category')?.setValue('');
+    this.search();
   }
 
   ngOnDestroy(): void {

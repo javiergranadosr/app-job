@@ -10,12 +10,12 @@ const routes: Routes = [
       {
         path: '',
         component: ProfileComponent,
-        title: 'Perfil de usuario'
+        title: 'Plataforma de trabajos | Perfil de usuario',
       },
       {
         path: 'detail/:id',
         component: DetailProfileComponent,
-        title: 'Perfil de candidato'
+        title: 'Plataforma de trabajos | Perfil del candidato o candidata',
       },
     ],
   },

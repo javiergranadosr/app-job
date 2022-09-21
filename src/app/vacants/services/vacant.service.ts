@@ -8,7 +8,7 @@ import {
   ListVacant,
   ResponseVacant,
   ResponseVacantDelete,
-} from '../interfaces/vacant';
+} from '../../shared/interfaces/vacant';
 
 @Injectable({
   providedIn: 'root',

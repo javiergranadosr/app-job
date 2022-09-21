@@ -7,7 +7,7 @@ import { FilterService } from 'src/app/home/services/filter.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { VacantService } from '../services/vacant.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataVacant } from '../interfaces/vacant';
+import { DataVacant } from '../../shared/interfaces/vacant';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { ResponseError } from 'src/app/shared/interfaces/error';
 import { StorageService } from 'src/app/shared/services/storage.service';
