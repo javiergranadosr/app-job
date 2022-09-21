@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { User } from 'src/app/auth/interfaces/login';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { DataVacant } from 'src/app/shared/interfaces/vacant';
 
 @Component({
@@ -8,7 +10,13 @@ import { DataVacant } from 'src/app/shared/interfaces/vacant';
 })
 export class CardVacantComponent implements OnInit {
   @Input() dataVacant!: DataVacant;
-  constructor() {}
+  user?: User;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.user = this.authService.dataUser
+      ? this.authService.dataUser
+      : undefined;
+  }
 }
