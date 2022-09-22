@@ -2,13 +2,17 @@
   <div class="p-2 flex flex-row flex-wrap justify-between align-center">
     <div class="flex flex-row justify-start align-center">
       <img
-        src="./assets/img/default_image.jpg"
+        [src]="
+          candidate.candidate.image
+            ? candidate.candidate.image
+            : './assets/img/default_image.jpg'
+        "
         alt="Imagen perfil de usuario"
         class="w-12 h-12 rounded-full"
       />
       <div class="ml-5">
         <p class="text-neutral-800 font-semibold text-base">
-          {{ candidate.candidate.name  }}
+          {{ candidate.candidate.name }}
         </p>
         <span>{{ candidate.candidate.email }}</span>
       </div>

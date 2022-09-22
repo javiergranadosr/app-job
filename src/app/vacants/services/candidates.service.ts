@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { Candidates, TotalCandidates } from '../interfaces/candidate';
+import { Candidates, TotalCandidates, Apply, ResponseAppy } from '../interfaces/candidate';
 import { map, catchError, of } from 'rxjs';
 
 @Injectable({
@@ -49,5 +49,18 @@ export class CandidatesService {
           );
         })
       );
+  }
+
+  applyVacant(candidate: Apply) {
+    const ep: string = `${this.urlBase}/candidates/apply`;
+    return this.http.post<ResponseAppy>(ep, candidate, { headers: this.headers }).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.log(error);
+        return of(error);
+      })
+    );
   }
 }

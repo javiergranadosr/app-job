@@ -46,23 +46,18 @@
   </div>
 
   <div
-    class="block m-auto bg-zinc-200 p-5 rounded-md mt-7"
+    class="flex justify-center flex-col items-center bg-zinc-200 p-5 rounded-md mt-7"
     *ngIf="user && user.roleId.name === 'DEVELOPER'"
   >
     <h4
-      class="mb-5 mt-5 text-neutral-800 font-bold text-md text-center lg:text-lg"
+      class="mt-5 text-neutral-800 font-bold text-md text-center lg:text-lg"
     >
       Postularse a esta vacante
     </h4>
-    <label class="text-sm lg:text-base text-neutral-800 w-full">
-      Curriculum /Hoja de vida (PDF)<span class="text-red-800">*</span>:</label
-    >
-    <input
-      class="w-full rounded-md py-2 text-sm lg:text-base text-neutral-800"
-      type="file"
-    />
     <button
+      type="button"
       class="w-1/4 mt-2 h-8 rounded-md px-2 bg-blue-700 text-white mx-1 hover:bg-blue-600"
+      (click)="apply(detailVacant.uid!)"
     >
       Postularme
     </button>
