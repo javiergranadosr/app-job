@@ -35,3 +35,26 @@ export interface ResponseAppy {
     applyDate: string;
   };
 }
+export interface VacantsCandidate {
+  total: number;
+  vacants: DataVacantCandidate[];
+}
+
+export interface DataVacantCandidate {
+  candidate: {
+    _id: string;
+    name: string;
+  };
+  vacant: {
+    _id: string;
+    title: string;
+    salary: string;
+    category: string;
+    company: string;
+    lastDate: string;
+    description: string;
+    image?: string;
+  };
+  uid: string;
+  applyDate: string;
+}

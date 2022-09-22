@@ -24,6 +24,20 @@
         >
       </div>
     </ng-container>
+
+    <ng-container
+      *ngIf="hasSession && dataUser && dataUser.roleId.name === 'DEVELOPER'"
+    >
+      <div class="menu">
+        <a
+          routerLink="/vacants/applications"
+          class="text-sm lg:text-base mr-2 text-neutral-800"
+          >Postulaciones</a
+        >
+      </div>
+    </ng-container>
+
+
   </div>
     <div class="menu movil-menu">
 

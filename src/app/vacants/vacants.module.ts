@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EditVacantComponent } from './edit-vacant/edit-vacant.component';
 import { CandidatesComponent } from './candidates/candidates.component';
 import { CardCandidateComponent } from './components/card-candidate/card-candidate.component';
+import { VacantsCandidateComponent } from './vacants-candidate/vacants-candidate.component';
+import { CardVacantCandidateComponent } from './components/card-vacant-candidate/card-vacant-candidate.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { CardCandidateComponent } from './components/card-candidate/card-candida
     EditVacantComponent,
     CandidatesComponent,
     CardCandidateComponent,
+    VacantsCandidateComponent,
+    CardVacantCandidateComponent,
   ],
   imports: [
     CommonModule,

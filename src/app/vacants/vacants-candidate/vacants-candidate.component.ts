@@ -2,18 +2,18 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
-import { DataVacant } from '../../shared/interfaces/vacant';
-import { VacantService } from '../services/vacant.service';
+import { DataVacantCandidate, VacantsCandidate } from '../interfaces/candidate';
+import { CandidatesService } from '../services/candidates.service';
 
 @Component({
-  selector: 'app-vacants',
-  templateUrl: './vacants.component.html',
-  styleUrls: ['./vacants.component.css'],
+  selector: 'app-vacants-candidate',
+  templateUrl: './vacants-candidate.component.html',
+  styleUrls: ['./vacants-candidate.component.css'],
 })
-export class VacantsComponent implements OnInit, OnDestroy {
+export class VacantsCandidateComponent implements OnInit, OnDestroy {
   uid: string = '';
-  vacantsRecruiter: DataVacant[] = [];
-  totalPublicVacants: number = 0;
+  vacantsCandidate: DataVacantCandidate[] = [];
+  totalVacants: number = 0;
   vacantSuscription!: Subscription;
   page: number = 0;
   limit: number = 10;
@@ -25,14 +25,14 @@ export class VacantsComponent implements OnInit, OnDestroy {
   endPage: number = this.limit;
 
   constructor(
-    private vacantServices: VacantService,
+    private candidatesService: CandidatesService,
     private authService: AuthService,
     private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
     this.uid = this.authService.dataUser ? this.authService.dataUser.uid : '';
-    this.getVacantsRecruiter(this.uid, this.page, this.limit, true);
+    this.getVacantsCandidate(this.uid, this.page, this.limit, true);
   }
 
   changeVacants(page: number) {
@@ -41,21 +41,21 @@ export class VacantsComponent implements OnInit, OnDestroy {
       this.listPages.indexOf(page) === 0
         ? 0
         : this.listPages.indexOf(page) * this.limit;
-    this.getVacantsRecruiter(this.uid, this.page, this.limit, false);
+    this.getVacantsCandidate(this.uid, this.page, this.limit, false);
   }
 
-  getVacantsRecruiter(
+  getVacantsCandidate(
     uid: string,
     page: number,
     limit: number,
     pagination: boolean
   ) {
     this.loadingService.loading();
-    this.vacantSuscription = this.vacantServices
-      .getVacantsRecruiter(uid, page, limit)
+    this.vacantSuscription = this.candidatesService
+      .getVacantsCandidates(uid, page, limit)
       .subscribe(({ total, vacants }) => {
-        this.totalPublicVacants = total;
-        this.vacantsRecruiter = vacants;
+        this.totalVacants = total;
+        this.vacantsCandidate = vacants;
         if (pagination) {
           this.totalPages = Math.ceil(total / this.limit);
           this.changePages();
@@ -63,6 +63,7 @@ export class VacantsComponent implements OnInit, OnDestroy {
         this.loadingService.removedLoading();
       });
   }
+
 
   prevPage() {
     if (this.startPage < this.totalPages) {
@@ -92,6 +93,7 @@ export class VacantsComponent implements OnInit, OnDestroy {
     this.pagination = this.listPages.slice(this.startPage, this.endPage);
   }
 
+
   changePages() {
     this.listPages = [];
     for (let index = 0; index < this.totalPages; index++) {
@@ -100,22 +102,12 @@ export class VacantsComponent implements OnInit, OnDestroy {
     this.pagination = this.listPages.slice(this.startPage, this.endPage);
   }
 
-  receiveDelete($event: boolean) {
-    if ($event) {
-      this.page = 0;
-      this.totalPages = 0;
-      this.listPages = [];
-      this.pagination = [];
-      this.startPage = 0;
-      this.endPage = this.limit;
-      this.getVacantsRecruiter(this.uid, this.page, this.limit, true);
-    }
-  }
 
   ngOnDestroy(): void {
     if (this.vacantSuscription) {
       this.vacantSuscription.unsubscribe();
     }
-    this.vacantsRecruiter = [];
+    this.vacantsCandidate = [];
   }
+
 }

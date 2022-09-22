@@ -1,0 +1,14 @@
+<div
+  class="w-full bg-white md:flex md:flex-row md:flex-wrap md:justify-between md:items-center border-b-2 shadow-2xl shadow-white rounded mt-2"
+>
+  <div class="p-5">
+    <h1 class="text-neutral-800 font-bold text-2xl pointer">
+      <a [routerLink]="['/vacants', 'detail', dataVacant.vacant._id]">
+        {{ dataVacant.vacant.title | titlecase }}
+      </a>
+    </h1>
+    <h2 class="text-neutral-800 font-semibold text-base">
+      {{ dataVacant.vacant.company | titlecase }}
+    </h2>
+  </div>
+</div>

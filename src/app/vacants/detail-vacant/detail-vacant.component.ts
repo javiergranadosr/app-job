@@ -62,7 +62,7 @@ export class DetailVacantComponent implements OnInit, OnDestroy {
           .subscribe((response) => {
             if (response.status === 400) {
               this.loadingService.removedLoading();
-              Notify.failure(response.error.errors[0].msg);
+              Notify.failure(response.error.message);
               return;
             }
             Notify.success(response.message);
@@ -75,6 +75,10 @@ export class DetailVacantComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.detailVacantSubscription) {
       this.detailVacantSubscription.unsubscribe();
+    }
+
+    if (this.applySubscription) {
+      this.applySubscription.unsubscribe();
     }
   }
 }

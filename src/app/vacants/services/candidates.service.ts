@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { Candidates, TotalCandidates, Apply, ResponseAppy } from '../interfaces/candidate';
+import { Candidates, TotalCandidates, Apply, ResponseAppy, VacantsCandidate } from '../interfaces/candidate';
 import { map, catchError, of } from 'rxjs';
 
 @Injectable({
@@ -63,4 +63,28 @@ export class CandidatesService {
       })
     );
   }
+
+  getVacantsCandidates(candidate: string, page: number, limit: number) {
+    const ep: string = `${this.urlBase}/candidates/vacantsCandidate`;
+    const params: HttpParams = new HttpParams()
+      .set('candidate', candidate)
+      .set('page', page)
+      .set('limit', limit);
+
+    return this.http
+      .get<VacantsCandidate>(ep, { headers: this.headers, params })
+      .pipe(
+        map((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          console.log(error);
+          throw new Error(
+            'Hubo un error al obtener las vacantes del candidato o candidata, favor de contactar a un administrador.'
+          );
+        })
+      );
+  }
+
+
 }

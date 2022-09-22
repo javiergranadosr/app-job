@@ -72,6 +72,7 @@ export class CandidatesComponent implements OnInit, OnDestroy {
   }
 
   changePages() {
+    this.listPages = [];
     for (let index = 0; index < this.totalPages; index++) {
       this.listPages.push(index + 1);
     }

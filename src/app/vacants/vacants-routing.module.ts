@@ -4,6 +4,7 @@ import { CandidatesComponent } from './candidates/candidates.component';
 import { DetailVacantComponent } from './detail-vacant/detail-vacant.component';
 import { EditVacantComponent } from './edit-vacant/edit-vacant.component';
 import { NewVacantComponent } from './new-vacant/new-vacant.component';
+import { VacantsCandidateComponent } from './vacants-candidate/vacants-candidate.component';
 import { VacantsComponent } from './vacants/vacants.component';
 
 const routes: Routes = [
@@ -34,6 +35,11 @@ const routes: Routes = [
         path: 'candidates/:id',
         component: CandidatesComponent,
         title: 'Plataforma de trabajos | Candidatos',
+      },
+      {
+        path: 'applications',
+        component: VacantsCandidateComponent,
+        title: 'Plataforma de trabajos | Postulaciones',
       },
     ],
   },
