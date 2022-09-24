@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { catchError, map, of, tap } from 'rxjs';
@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Login, ResponseLogin, User } from '../interfaces/login';
 import { Register, ResponseRegister } from '../interfaces/register';
 import { Role } from '../interfaces/role';
+import { AuthToken } from '../interfaces/token';
 
 @Injectable({
   providedIn: 'root',
@@ -61,6 +62,7 @@ export class AuthService {
     return this.http.post<ResponseLogin>(ep, data).pipe(
       tap((response) => {
         if (response.token) {
+          sessionStorage.clear();
           sessionStorage.setItem('token', response.token);
           sessionStorage.setItem('data', JSON.stringify(response.data));
         }
@@ -81,6 +83,20 @@ export class AuthService {
     return sessionStorage.getItem('token')
       ? sessionStorage.getItem('token')!
       : '';
+  }
+
+  authToken(token: string) {
+    const ep = `${this.urlBase}/auth/token`;
+    const headers = new HttpHeaders().set('token', token);
+    return this.http.get<AuthToken>(ep, { headers }).pipe(
+      map((response) => {
+        return response.hasToken;
+      }),
+      catchError((error) => {
+        console.log(error);
+        return of(false);
+      })
+    );
   }
 
   logout() {
