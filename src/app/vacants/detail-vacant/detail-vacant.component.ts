@@ -65,7 +65,7 @@ export class DetailVacantComponent implements OnInit, OnDestroy {
               Notify.failure(response.error.message);
               return;
             }
-            Notify.success(response.message);
+            Notify.info(response.message);
             this.loadingService.removedLoading();
           });
       }

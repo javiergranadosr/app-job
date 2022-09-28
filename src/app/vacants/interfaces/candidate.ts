@@ -28,7 +28,7 @@ export interface Apply {
 
 export interface ResponseAppy {
   message: string;
-  data: {
+  data?: {
     candidate: string;
     vacant: string;
     uid: string;
