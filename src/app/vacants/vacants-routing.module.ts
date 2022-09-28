@@ -7,6 +7,7 @@ import { EditVacantComponent } from './edit-vacant/edit-vacant.component';
 import { NewVacantComponent } from './new-vacant/new-vacant.component';
 import { VacantsCandidateComponent } from './vacants-candidate/vacants-candidate.component';
 import { VacantsComponent } from './vacants/vacants.component';
+import { RoleGuard } from '../shared/guards/role.guard';
 
 const routes: Routes = [
   {
@@ -16,15 +17,17 @@ const routes: Routes = [
         path: '',
         component: VacantsComponent,
         title: 'Plataforma de trabajos | Vacantes publicadas',
-        canActivate: [TokenGuard],
+        canActivate: [TokenGuard, RoleGuard],
         canLoad: [TokenGuard],
+        data: {ROLES: ['RECRUITER']}
       },
       {
         path: 'create',
         component: NewVacantComponent,
         title: 'Plataforma de trabajos | Crear vacante',
-        canActivate: [TokenGuard],
+        canActivate: [TokenGuard, RoleGuard],
         canLoad: [TokenGuard],
+        data: {ROLES: ['RECRUITER']}
       },
       {
         path: 'detail/:id',
@@ -35,22 +38,25 @@ const routes: Routes = [
         path: 'edit/:id',
         component: EditVacantComponent,
         title: 'Plataforma de trabajos | Editar vacante',
-        canActivate: [TokenGuard],
+        canActivate: [TokenGuard, RoleGuard],
         canLoad: [TokenGuard],
+        data: {ROLES: ['RECRUITER']}
       },
       {
         path: 'candidates/:id',
         component: CandidatesComponent,
         title: 'Plataforma de trabajos | Candidatos',
-        canActivate: [TokenGuard],
+        canActivate: [TokenGuard, RoleGuard],
         canLoad: [TokenGuard],
+        data: {ROLES: ['RECRUITER']}
       },
       {
         path: 'applications',
         component: VacantsCandidateComponent,
         title: 'Plataforma de trabajos | Postulaciones',
-        canActivate: [TokenGuard],
+        canActivate: [TokenGuard, RoleGuard],
         canLoad: [TokenGuard],
+        data: {ROLES: ['DEVELOPER']}
       },
     ],
   },

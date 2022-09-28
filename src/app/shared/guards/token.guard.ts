@@ -7,14 +7,13 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   providedIn: 'root',
 })
 export class TokenGuard implements CanActivate, CanLoad {
-  token: string = '';
-
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> | boolean {
     return this.authService.authToken(this.authService.token).pipe(
       tap((token) => {
         if (!token) {
+          this.authService.logout();
           this.router.navigateByUrl('auth');
         }
       })
@@ -24,6 +23,7 @@ export class TokenGuard implements CanActivate, CanLoad {
     return this.authService.authToken(this.authService.token).pipe(
       tap((token) => {
         if (!token) {
+          this.authService.logout();
           this.router.navigateByUrl('auth');
         }
       })

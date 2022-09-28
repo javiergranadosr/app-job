@@ -8,3 +8,8 @@ export interface Roles {
   description: string;
   uid: string;
 }
+
+export interface AuthRole {
+  hasRole: boolean;
+  message: string;
+}

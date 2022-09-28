@@ -5,7 +5,7 @@ import { catchError, map, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Login, ResponseLogin, User } from '../interfaces/login';
 import { Register, ResponseRegister } from '../interfaces/register';
-import { Role } from '../interfaces/role';
+import { AuthRole, Role } from '../interfaces/role';
 import { AuthToken } from '../interfaces/token';
 
 @Injectable({
@@ -91,6 +91,19 @@ export class AuthService {
     return this.http.get<AuthToken>(ep, { headers }).pipe(
       map((response) => {
         return response.hasToken;
+      }),
+      catchError((error) => {
+        console.log(error);
+        return of(false);
+      })
+    );
+  }
+
+  authRole(userId: string, roleRequired: string[]) {
+    const ep: string = `${this.urlBase}/auth/role`;
+    return this.http.post<AuthRole>(ep, { userId, roleRequired }).pipe(
+      map((response) => {
+        return response.hasRole;
       }),
       catchError((error) => {
         console.log(error);
