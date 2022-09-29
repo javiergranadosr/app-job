@@ -1,4 +1,5 @@
 # Plataforma de trabajos 
+## Demo: https://jazzy-sawine-acc9bd.netlify.app/
 ## Tecnologías utilizadas: 
 ### Frontend
 * Angular
