@@ -1,5 +1,5 @@
 # Plataforma de trabajos 
-## Demo: https://jazzy-sawine-acc9bd.netlify.app/
+## Demo: https://idyllic-smakager-2b226a.netlify.app/
 ## Tecnologías utilizadas: 
 ### Frontend
 * Angular
